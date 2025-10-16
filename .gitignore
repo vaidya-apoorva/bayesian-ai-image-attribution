@@ -1,10 +1,14 @@
-# Ignore IDE/editor config folders
+# IDE
 .idea/
 .vscode/
 
-# Ignore local folders
-tmp/
+# Envs and installers
 anaconda/
+anaconda/envs/
+anaconda/pkgs/
+aeroblade/aeroblade-venv/
+Anaconda3-*.sh
 
-# Ignore large installers
-Anaconda3-2024.10-1-Linux-x86_64.sh
+# Caches/outputs
+tmp/
+openimage_results/
