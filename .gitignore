@@ -1,0 +1,10 @@
+# Ignore IDE/editor config folders
+.idea/
+.vscode/
+
+# Ignore local folders
+tmp/
+anaconda/
+
+# Ignore large installers
+Anaconda3-2024.10-1-Linux-x86_64.sh
