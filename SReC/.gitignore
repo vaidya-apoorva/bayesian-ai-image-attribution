@@ -1,0 +1,6 @@
+*.tfevents.*
+*.pyc
+.vscode
+*.json
+*.srec
+*.pth

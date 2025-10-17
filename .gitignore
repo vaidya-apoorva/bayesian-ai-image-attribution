@@ -1,0 +1,14 @@
+# IDE
+.idea/
+.vscode/
+
+# Envs and installers
+anaconda/
+anaconda/envs/
+anaconda/pkgs/
+aeroblade/aeroblade-venv/
+Anaconda3-*.sh
+
+# Caches/outputs
+tmp/
+openimage_results/
