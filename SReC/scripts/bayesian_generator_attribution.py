@@ -44,46 +44,11 @@ def load_zed_outputs(*json_files):
     return zed_data
 
 # Phase 2 & 3: Compute likelihood p(x|y) and prior p(y)
-# def compute_posterior(aeroblade, zed):
-#     results = []
-#     image_set = set(zed.keys())
-#
-#     print(f"Processing {len(image_set)} images...")
-#     for image in image_set:
-#         print("image:", image)
-#         zed_scores = zed[image]
-#         labels = list(zed_scores.keys())
-#         scores = np.array([np.mean(zed_scores[label]) for label in labels])
-#         likelihood = softmax(scores)  # p(x|y)
-#
-#         priors = []
-#         for label in labels:
-#             distance = aeroblade.get(label, {}).get(image, -1.0)
-#             prior = np.exp(-abs(distance))
-#             priors.append(prior)
-#         priors = np.array(priors)
-#         priors = priors / priors.sum()  # Normalize
-#
-#         posterior = likelihood * priors
-#         posterior /= posterior.sum()  # Normalize
-#
-#         results.append({
-#             'image': image,
-#             'labels': labels,
-#             'likelihood': likelihood.tolist(),
-#             'prior': priors.tolist(),
-#             'posterior': posterior.tolist(),
-#             'prediction': labels[np.argmax(posterior)]
-#         })
-#     return results
-
-# Phase 4: Save predictions
-
 def compute_posterior(aeroblade, zed):
     # ZED format is: {label: [score_for_image_0, score_for_image_1, ...]}
     labels = list(zed.keys())
     if not labels:
-        print("⚠️ No labels found in ZED data.")
+        print("WARNING: No labels found in ZED data.")
         return []
 
     # Build a sorted list of images from AeroBlade outputs (union across models)
@@ -93,14 +58,14 @@ def compute_posterior(aeroblade, zed):
     images = sorted(all_images)
 
     if not images:
-        print("⚠️ No images found in AeroBlade outputs.")
+        print("WARNING: No images found in AeroBlade outputs.")
         return []
 
     # Determine usable length = min(len(images), min(len(zed[label]) for each label))
     zed_lengths = {label: len(zed[label]) for label in labels}
     usable_len = min(len(images), *(zed_lengths.values()))
     if usable_len < len(images) or any(zed_lengths[l] != usable_len for l in labels):
-        print(f"⚠️ Length mismatch: using first {usable_len} items.")
+        print(f"WARNING: Length mismatch: using first {usable_len} items.")
         print(f"   Images available: {len(images)}; ZED lengths: {zed_lengths}")
 
     results = []

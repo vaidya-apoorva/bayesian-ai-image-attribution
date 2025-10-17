@@ -33,7 +33,6 @@ mt_apoorva_zero_shot_detector/
 │   ├── visualisation/             # Generated plots and visualizations
 │   └── src/aeroblade/            # Core AEROBLADE modules
 ├── SReC/                          # Super-Resolution Compression
-│   ├── bayesian_generator_attribution.py  # Main pipeline integration
 │   ├── zero_shot_detector.py     # SReC-based detection
 │   ├── src/                       # SReC core implementation
 │   ├── models/                    # Pre-trained compression models
@@ -45,6 +44,7 @@ mt_apoorva_zero_shot_detector/
 │   │   └── aeroblade_plots/      # AEROBLADE integration results
 │   ├── figs/                     # Concept figures and documentation
 │   └── scripts/                  # Utility and analysis scripts
+│       └── bayesian_generator_attribution.py  # Main pipeline integration
 └── README.md                      # This file
 ```
 
@@ -85,7 +85,7 @@ mt_apoorva_zero_shot_detector/
    pip install torchac
    ```
 
-## 🔧 Usage
+## Usage
 
 ### Quick Start
 
@@ -114,7 +114,8 @@ python zero_shot_detector.py --path path/to/images --file image_list.txt --load 
 
 Combine both methods for final attribution:
 ```bash
-python bayesian_generator_attribution.py
+cd SReC
+python scripts/bayesian_generator_attribution.py
 ```
 
 ### Advanced Usage
@@ -170,7 +171,7 @@ The complete pipeline workflow:
 4. **Final attribution**:
    ```bash
    cd ../SReC
-   python bayesian_generator_attribution.py
+   python scripts/bayesian_generator_attribution.py
    ```
 
 ## Output Format
@@ -247,7 +248,7 @@ The repository includes comprehensive experimental frameworks:
 - **MidJourney**: MidJourney V5, V5.1
 - **Stable Diffusion**: SD1.1, SD1.5, SD2.1, SDXL
 
-## 🔬 Technical Details
+## Technical Details
 
 ### AEROBLADE Method
 - Uses autoencoder reconstruction error as detection signal

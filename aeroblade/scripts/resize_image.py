@@ -42,7 +42,7 @@ if len(size_counts) > 1 or list(size_counts.keys())[0] != resize_to:
                 resized.save(output_path)
         except Exception as e:
             print(f"Error resizing {filename}: {e}")
-    print("✅ All images resized.")
+    print("SUCCESS: All images resized.")
 else:
-    print("\n✅ All images already have correct dimensions. No resizing done.")
+    print("\nSUCCESS: All images already have correct dimensions. No resizing done.")
 

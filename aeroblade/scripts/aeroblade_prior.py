@@ -47,4 +47,4 @@ for fname, group in df_all.groupby('filename'):
 with open(OUTPUT_FILE, 'w') as f:
     json.dump(priors, f, indent=2)
 
-print(f"✅ Soft priors saved to {OUTPUT_FILE}")
+print(f"SUCCESS: Soft priors saved to {OUTPUT_FILE}")

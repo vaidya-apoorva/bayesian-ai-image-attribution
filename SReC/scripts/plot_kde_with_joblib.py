@@ -32,7 +32,7 @@ for fn in os.listdir(json_dir):
     gaps = np.array(list(data.values()), dtype=float).reshape(-1, 1)
 
     if gaps.shape[0] < 2:
-        print(f"⚠️  skipping {name}, not enough samples")
+        print(f"WARNING: skipping {name}, not enough samples")
         continue
 
     # fit a Gaussian KDE (you can tune bandwidth)
@@ -42,7 +42,7 @@ for fn in os.listdir(json_dir):
     # save the model
     out_kde = os.path.join(kde_model_dir, f"kde_model_{name}.joblib")
     joblib.dump(kde, out_kde)
-    print(f"✅ saved KDE model for {name} → {out_kde}")
+    print(f"SUCCESS: saved KDE model for {name} → {out_kde}")
 
 # STEP 2 — (optional) plot all of them again for a visual check
 plt.figure(figsize=(10,6))
@@ -66,4 +66,4 @@ plt.grid(alpha=0.3)
 plt.legend(fontsize=9)
 plt.tight_layout()
 plt.savefig(kde_plot_png, dpi=300)
-print(f"🖼  KDE check plot saved → {kde_plot_png}")
+print(f"INFO: KDE check plot saved → {kde_plot_png}")
