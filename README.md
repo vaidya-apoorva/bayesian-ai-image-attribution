@@ -17,7 +17,7 @@ The pipeline integrates:
 - **Probabilistic approach**: Provides confidence scores rather than binary classifications
 - **Comprehensive evaluation**: Includes ROC analysis, accuracy metrics, and visualization tools
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 mt_apoorva_zero_shot_detector/
@@ -29,12 +29,22 @@ mt_apoorva_zero_shot_detector/
 │   ├── experiments/               # Experimental notebooks and analysis
 │   ├── models/                    # Pre-trained KDE models
 │   ├── example_images/            # Sample images for testing
+│   ├── results/                   # Analysis results and outputs
+│   ├── visualisation/             # Generated plots and visualizations
 │   └── src/aeroblade/            # Core AEROBLADE modules
 ├── SReC/                          # Super-Resolution Compression
 │   ├── bayesian_generator_attribution.py  # Main pipeline integration
 │   ├── zero_shot_detector.py     # SReC-based detection
 │   ├── src/                       # SReC core implementation
-│   └── models/                    # Pre-trained compression models
+│   ├── models/                    # Pre-trained compression models
+│   ├── results/                   # Organized analysis outputs
+│   │   ├── performance/           # ROC curves and accuracy metrics
+│   │   ├── histograms/           # D(0) distributions and data analysis
+│   │   ├── models/               # Model performance plots
+│   │   ├── KDE_plot/             # KDE analysis visualizations
+│   │   └── aeroblade_plots/      # AEROBLADE integration results
+│   ├── figs/                     # Concept figures and documentation
+│   └── scripts/                  # Utility and analysis scripts
 └── README.md                      # This file
 ```
 
@@ -68,12 +78,6 @@ mt_apoorva_zero_shot_detector/
    conda env create -f environment.yml
    conda activate SReC
    pip install -r requirements.txt
-   ```
-
-   Alternatively, for manual installation:
-   ```bash
-   pip install torch torchvision
-   pip install click Pillow==5.3.0 tensorboard scipy==1.1.0 scikit-image
    ```
 
 4. **Install torchac for compression** (optional, required for SReC compression):
@@ -173,13 +177,16 @@ The complete pipeline workflow:
 
 ### AEROBLADE Output
 - **CSV files**: Distance measurements for each autoencoder
-- **Reconstruction images**: Visual reconstruction results
+- **Reconstruction images**: Visual reconstruction results (saved in `results/`)
 - **JSON files**: Prior probabilities for each generator
+- **Visualizations**: KDE plots and analysis charts (organized in `visualisation/`)
 
 ### SReC Output
 - **SREC files**: Compressed representations
 - **D(l) scores**: Reconstruction error measurements
-- **Log-likelihood data**: Probability distributions
+- **Performance plots**: ROC curves and accuracy metrics (in `results/performance/`)
+- **Distribution analysis**: D(0) histograms and generator comparisons (in `results/histograms/`)
+- **Model diagnostics**: Training and debug visualizations (in `results/models/`)
 
 ### Bayesian Integration
 - **Posterior probabilities**: Final attribution confidence scores
@@ -210,16 +217,29 @@ The repository includes comprehensive experimental frameworks:
 
 ### Pre-trained Models
 
-**AEROBLADE KDE Models** (located in `aeroblade/models/`):
-- `kde_model_Real.joblib`: Real image distance distribution
-- `kde_model_DALL-E.joblib`: DALL-E generated images
-- `kde_model_MidJourney.joblib`: MidJourney V5 images
-- `kde_model_StableDiffusion.joblib`: Stable Diffusion variants
-- `kde_model_Unknown.joblib`: Mixed/unknown sources
+**AEROBLADE KDE Models**:
+- `aeroblade/models/generator_kdes/`: Core KDE models (4 generators)
+  - `kde_model_Real.joblib`: Real image distance distribution
+  - `kde_model_DALL-E.joblib`: DALL-E generated images  
+  - `kde_model_MidJourney.joblib`: MidJourney V5 images
+  - `kde_model_StableDiffusion.joblib`: Stable Diffusion variants
 
-**SReC Models**:
-- `models/openimages.pth`: Trained on Open Images dataset (2.70 bpsp)
-- `models/imagenet64.pth`: Trained on ImageNet64 (4.29 bpsp)
+**SReC Models** (located in `SReC/models/`):
+- `openimages.pth`: Trained on Open Images dataset (2.70 bpsp)
+- `imagenet64.pth`: Trained on ImageNet64 (4.29 bpsp)
+
+### Output Organization
+
+**AEROBLADE Outputs**:
+- `results/`: Distance measurements and analysis results
+- `visualisation/`: Generated plots and KDE visualizations
+
+**SReC Outputs**:
+- `results/performance/`: ROC curves and classification metrics
+- `results/histograms/`: D(0) distribution analysis plots  
+- `results/models/`: Model performance and debug visualizations
+- `results/KDE_plot/`: KDE analysis and coding cost plots
+- `results/aeroblade_plots/`: Integration analysis with AEROBLADE
 
 ### Supported Generators
 - **Real images**: COCO, Open Images, RAISE dataset
@@ -266,8 +286,14 @@ The repository includes comprehensive experimental frameworks:
 
 4. **Model loading errors**:
    - Verify model files are present in `models/` directories
+   - For AEROBLADE: KDE models are organized in `generator_kdes/`
+   - For SReC: Compression models are in `SReC/models/`
    - Check file permissions and disk space
 
+5. **Output file organization**:
+   - Results are automatically organized into appropriate subdirectories
+   - AEROBLADE: outputs to `results/` and `visualisation/`
+   - SReC: outputs organized by type in `results/performance/`, `results/histograms/`, etc.
 
 ## Citation
 
