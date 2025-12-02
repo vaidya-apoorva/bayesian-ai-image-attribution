@@ -12,21 +12,13 @@ Anaconda3-*.sh
 # Caches/outputs
 tmp/
 openimage_results/
+combined_pipeline/cache/
+baseline_classifier/runs/
+gi_conference_results/baseline_results/
 
+# File types
 *.png
 *.pth
 *.srec
-
 *.egg-info/
-combined_pipeline/cache/
-baseline_classifier/runs/
-gi_conference_results/baseline_results/
-combined_pipeline/cache/
-baseline_classifier/runs/
-gi_conference_results/baseline_results/
-combined_pipeline/cache/
-baseline_classifier/runs/
-gi_conference_results/baseline_results/
-combined_pipeline/cache/
-baseline_classifier/runs/
-gi_conference_results/baseline_results/
+
