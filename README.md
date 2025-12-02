@@ -24,7 +24,7 @@ The pipeline integrates four complementary detection methods:
 ## Repository Structure
 
 ```
-gi_conference/
+gi_conference_code/
 ├── aeroblade/                      # AEROBLADE implementation
 │   ├── scripts/                    # Detection and analysis scripts
 │   │   ├── run_aeroblade.py       # Primary detection script
@@ -109,8 +109,8 @@ gi_conference/
 
 #### 1. Clone the repository
 ```bash
-git clone <repository-url>
-cd gi_conference
+git clone git@gitlab.cs.fau.de:op44ogoh/gi_conference_code.git
+cd gi_conference_code
 ```
 
 #### 2. Set up AEROBLADE environment
