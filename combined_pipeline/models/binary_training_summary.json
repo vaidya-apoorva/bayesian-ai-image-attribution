@@ -1,0 +1,359 @@
+{
+  "dalle3": {
+    "generator": "dalle3",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet50_dalle3_vs_coco.pth",
+    "best_val_acc": 0.99375,
+    "training_time": 67.76088786125183,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.22030674214474857,
+        "train_acc": 0.9,
+        "val_loss": 0.22828506007790567,
+        "val_acc": 0.91875
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.0613911796361208,
+        "train_acc": 0.9734375,
+        "val_loss": 0.07757244817912579,
+        "val_acc": 0.98125
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.027888609655201436,
+        "train_acc": 0.9875,
+        "val_loss": 0.06885241344571114,
+        "val_acc": 0.99375
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.023864306649193166,
+        "train_acc": 0.9921875,
+        "val_loss": 0.05227261893451214,
+        "val_acc": 0.9875
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.014249154087156057,
+        "train_acc": 0.996875,
+        "val_loss": 0.05762795098125935,
+        "val_acc": 0.9875
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.01190356481820345,
+        "train_acc": 0.9953125,
+        "val_loss": 0.08417748734354973,
+        "val_acc": 0.98125
+      }
+    ]
+  },
+  "firefly": {
+    "generator": "firefly",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet50_firefly_vs_coco.pth",
+    "best_val_acc": 0.975,
+    "training_time": 44.34987807273865,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.2579067384824157,
+        "train_acc": 0.9015625,
+        "val_loss": 0.14332615286111833,
+        "val_acc": 0.95625
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.061696236860007046,
+        "train_acc": 0.9796875,
+        "val_loss": 0.06804347857832908,
+        "val_acc": 0.96875
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.04883188493549824,
+        "train_acc": 0.9875,
+        "val_loss": 0.0853859655559063,
+        "val_acc": 0.95625
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.017503313720226288,
+        "train_acc": 0.996875,
+        "val_loss": 0.08204707130789757,
+        "val_acc": 0.96875
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.010782745014876128,
+        "train_acc": 0.9984375,
+        "val_loss": 0.06775872446596623,
+        "val_acc": 0.975
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.013183296471834183,
+        "train_acc": 0.9953125,
+        "val_loss": 0.12231042012572288,
+        "val_acc": 0.9625
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.03262354456819594,
+        "train_acc": 0.9875,
+        "val_loss": 0.15695269256830216,
+        "val_acc": 0.9375
+      },
+      {
+        "epoch": 8,
+        "train_loss": 0.03546153544448316,
+        "train_acc": 0.9890625,
+        "val_loss": 0.08462113179266453,
+        "val_acc": 0.96875
+      }
+    ]
+  },
+  "midjourneyV5": {
+    "generator": "midjourneyV5",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet50_midjourneyV5_vs_coco.pth",
+    "best_val_acc": 0.9666666666666667,
+    "training_time": 26.98065495491028,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.29086064770817754,
+        "train_acc": 0.88125,
+        "val_loss": 0.09757747898499171,
+        "val_acc": 0.9666666666666667
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.06623742257555326,
+        "train_acc": 0.9770833333333333,
+        "val_loss": 0.18317658205827078,
+        "val_acc": 0.9583333333333334
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.0372856047625343,
+        "train_acc": 0.9833333333333333,
+        "val_loss": 0.12756880422433217,
+        "val_acc": 0.9666666666666667
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.014961194495360057,
+        "train_acc": 0.9979166666666667,
+        "val_loss": 0.13228865315516788,
+        "val_acc": 0.95
+      }
+    ]
+  },
+  "midjourneyV6": {
+    "generator": "midjourneyV6",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet50_midjourneyV6_vs_coco.pth",
+    "best_val_acc": 0.9625,
+    "training_time": 49.471304178237915,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.2792018258944154,
+        "train_acc": 0.8703125,
+        "val_loss": 0.23326679319143295,
+        "val_acc": 0.9
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.046188604459166525,
+        "train_acc": 0.9859375,
+        "val_loss": 0.12587056756019593,
+        "val_acc": 0.9625
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.017273142794147135,
+        "train_acc": 0.996875,
+        "val_loss": 0.17247713096439837,
+        "val_acc": 0.95
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.016060234000906348,
+        "train_acc": 0.9953125,
+        "val_loss": 0.13182873129844666,
+        "val_acc": 0.9625
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.038028156664222476,
+        "train_acc": 0.9859375,
+        "val_loss": 0.2628236453980207,
+        "val_acc": 0.93125
+      }
+    ]
+  },
+  "sdxl": {
+    "generator": "sdxl",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet50_sdxl_vs_coco.pth",
+    "best_val_acc": 0.9666666666666667,
+    "training_time": 32.50741529464722,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.2993495377401511,
+        "train_acc": 0.8625,
+        "val_loss": 0.2869319379329681,
+        "val_acc": 0.8916666666666667
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.05380054973065853,
+        "train_acc": 0.9916666666666667,
+        "val_loss": 0.1521887982885043,
+        "val_acc": 0.9583333333333334
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.03604928192993005,
+        "train_acc": 0.9895833333333334,
+        "val_loss": 0.12096068014701207,
+        "val_acc": 0.95
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.03741386185089747,
+        "train_acc": 0.9854166666666667,
+        "val_loss": 0.10816208968559901,
+        "val_acc": 0.9666666666666667
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.042877994912366074,
+        "train_acc": 0.9875,
+        "val_loss": 0.09458950112263362,
+        "val_acc": 0.9666666666666667
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.029645602156718572,
+        "train_acc": 0.9895833333333334,
+        "val_loss": 0.09050271014372507,
+        "val_acc": 0.9583333333333334
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.03139793314039707,
+        "train_acc": 0.9895833333333334,
+        "val_loss": 0.12881451547145845,
+        "val_acc": 0.9416666666666667
+      }
+    ]
+  },
+  "stable_diffusion_1_5": {
+    "generator": "stable_diffusion_1_5",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet50_stable_diffusion_1_5_vs_coco.pth",
+    "best_val_acc": 0.9375,
+    "training_time": 38.965187072753906,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.38182114981149845,
+        "train_acc": 0.8278560250391236,
+        "val_loss": 0.20530449226498604,
+        "val_acc": 0.91875
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.10061013106262554,
+        "train_acc": 0.9687010954616588,
+        "val_loss": 0.20634477846324445,
+        "val_acc": 0.9125
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.05965357937256868,
+        "train_acc": 0.9796557120500783,
+        "val_loss": 0.2826762266457081,
+        "val_acc": 0.9125
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.03262353302467853,
+        "train_acc": 0.9890453834115805,
+        "val_loss": 0.22003647722303868,
+        "val_acc": 0.9375
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.019255195607333582,
+        "train_acc": 0.9968701095461658,
+        "val_loss": 0.18320566043257713,
+        "val_acc": 0.9375
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.026253554404528114,
+        "train_acc": 0.9890453834115805,
+        "val_loss": 0.2075445182621479,
+        "val_acc": 0.9375
+      },
+      {
+        "epoch": 7,
+        "train_loss": 0.03676304234853466,
+        "train_acc": 0.9827856025039123,
+        "val_loss": 0.3264142140746117,
+        "val_acc": 0.9
+      }
+    ]
+  },
+  "dalle2": {
+    "generator": "dalle2",
+    "model_path": "/mnt/ssd-data/vaidya/combined_pipeline/models/resnet18_dalle2_vs_coco.pth",
+    "best_val_acc": 0.9666666666666667,
+    "training_time": 81.13057589530945,
+    "training_history": [
+      {
+        "epoch": 1,
+        "train_loss": 0.5375380672640719,
+        "train_acc": 0.7097457627118644,
+        "val_loss": 0.46144395917654035,
+        "val_acc": 0.7666666666666667
+      },
+      {
+        "epoch": 2,
+        "train_loss": 0.15558815629531939,
+        "train_acc": 0.9645833333333333,
+        "val_loss": 0.20633608053127925,
+        "val_acc": 0.9083333333333333
+      },
+      {
+        "epoch": 3,
+        "train_loss": 0.0631763386229674,
+        "train_acc": 0.9895833333333334,
+        "val_loss": 0.12434350873033205,
+        "val_acc": 0.9666666666666667
+      },
+      {
+        "epoch": 4,
+        "train_loss": 0.0494239571193854,
+        "train_acc": 0.9854166666666667,
+        "val_loss": 0.1105308435857296,
+        "val_acc": 0.9416666666666667
+      },
+      {
+        "epoch": 5,
+        "train_loss": 0.031992730622490244,
+        "train_acc": 0.99375,
+        "val_loss": 0.09075507869323095,
+        "val_acc": 0.9583333333333334
+      },
+      {
+        "epoch": 6,
+        "train_loss": 0.042335181434949236,
+        "train_acc": 0.9875,
+        "val_loss": 0.06569761311014494,
+        "val_acc": 0.9666666666666667
+      }
+    ]
+  }
+}

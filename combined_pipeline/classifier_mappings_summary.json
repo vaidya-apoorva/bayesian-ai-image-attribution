@@ -1,0 +1,26 @@
+{
+  "dall-e2": {
+    "mapping": "Class 0 = AI, Class 1 = Real",
+    "status": "correct"
+  },
+  "firefly": {
+    "mapping": "Class 0 = Real, Class 1 = AI",
+    "status": "inverted"
+  },
+  "midjourneyV5": {
+    "mapping": "Class 0 = Real, Class 1 = AI",
+    "status": "inverted"
+  },
+  "midjourneyV6": {
+    "mapping": "Class 0 = Real, Class 1 = AI",
+    "status": "inverted"
+  },
+  "sdxl": {
+    "mapping": "Class 0 = Real, Class 1 = AI",
+    "status": "inverted"
+  },
+  "stable_diffusion_1-5": {
+    "mapping": "Class 0 = Real, Class 1 = AI",
+    "status": "inverted"
+  }
+}

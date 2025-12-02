@@ -12,3 +12,9 @@ Anaconda3-*.sh
 # Caches/outputs
 tmp/
 openimage_results/
+
+*.png
+*.pth
+*.srec
+
+*.egg-info/

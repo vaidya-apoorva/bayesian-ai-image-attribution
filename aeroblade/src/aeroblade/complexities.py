@@ -6,7 +6,7 @@ import torch
 from joblib.memory import Memory
 from torch.utils.data import DataLoader
 from torchvision.io import encode_jpeg
-from torchvision.transforms.v2.functional import convert_image_dtype
+from torchvision.transforms.functional import convert_image_dtype
 from tqdm import tqdm
 
 from aeroblade.data import ImageFolder
@@ -60,7 +60,7 @@ def _compute_jpeg(
                 encode_jpeg(convert_image_dtype(patch, torch.uint8), quality=quality)
             )
             patch_results.append(nbytes)
-        image_results.append(torch.tensor(patch_results, dtype=torch.float16))
+        image_results.append(torch.tensor(patch_results, dtype=(torch.float16 if torch.cuda.is_available() else torch.float32)))
     return torch.stack(image_results) / (patch.shape[1] * patch.shape[2])  # normalize
 
 

@@ -1,0 +1,208 @@
+{
+  "metadata": {
+    "experiment_name": "SReC_ImageNet_FullExperiment",
+    "date_processed": "2025-10-23",
+    "total_datasets": 7,
+    "images_per_dataset": 512,
+    "total_images": 3584,
+    "model_used": "imagenet64.pth",
+    "processing_method": "CUDA-only with RGB conversion",
+    "description": "Full SReC experiment on ImageNet validation and 6 AI generators"
+  },
+  "results": {
+    "val": {
+      "type": "real",
+      "dataset_name": "ImageNet Validation",
+      "mean_d_l": -0.0271,
+      "std_d_l": 0.0339,
+      "count": 512,
+      "interpretation": "Negative D(l) indicates easier compression (expected for real images)",
+      "detectability": "baseline"
+    },
+    "imagenet256-adm": {
+      "type": "ai",
+      "dataset_name": "ImageNet256 ADM",
+      "mean_d_l": 0.0126,
+      "std_d_l": 0.0654,
+      "count": 512,
+      "interpretation": "Positive D(l) indicates harder compression than real images",
+      "detectability": "medium"
+    },
+    "imagenet256-admg": {
+      "type": "ai",
+      "dataset_name": "ImageNet256 ADMG",
+      "mean_d_l": 0.0095,
+      "std_d_l": 0.0642,
+      "count": 512,
+      "interpretation": "Positive D(l) indicates harder compression than real images",
+      "detectability": "medium"
+    },
+    "imagenet256-biggan": {
+      "type": "ai",
+      "dataset_name": "ImageNet256 BigGAN",
+      "mean_d_l": -0.0426,
+      "std_d_l": 0.0344,
+      "count": 512,
+      "interpretation": "Most negative D(l) - even easier to compress than real images",
+      "detectability": "high"
+    },
+    "imagenet256-dit-xl-2": {
+      "type": "ai",
+      "dataset_name": "ImageNet256 DiT-XL-2",
+      "mean_d_l": 0.0477,
+      "std_d_l": 0.0477,
+      "count": 512,
+      "interpretation": "Highest positive D(l) - most difficult to compress",
+      "detectability": "very_high"
+    },
+    "imagenet256-gigagan": {
+      "type": "ai",
+      "dataset_name": "ImageNet256 GigaGAN",
+      "mean_d_l": -0.0281,
+      "std_d_l": 0.038,
+      "count": 512,
+      "interpretation": "Negative D(l) similar to real images",
+      "detectability": "low"
+    },
+    "imagenet256-ldm": {
+      "type": "ai",
+      "dataset_name": "ImageNet256 LDM",
+      "mean_d_l": -0.0053,
+      "std_d_l": 0.0338,
+      "count": 512,
+      "interpretation": "Near-zero D(l) - compression similar to real images",
+      "detectability": "low"
+    }
+  },
+  "analysis": {
+    "real_datasets": {
+      "count": 1,
+      "datasets": [
+        "val"
+      ],
+      "mean_d_l_range": [
+        -0.0271,
+        -0.0271
+      ],
+      "avg_mean_d_l": -0.0271,
+      "avg_std_d_l": 0.0339
+    },
+    "ai_datasets": {
+      "count": 6,
+      "datasets": [
+        "imagenet256-adm",
+        "imagenet256-admg",
+        "imagenet256-biggan",
+        "imagenet256-dit-xl-2",
+        "imagenet256-gigagan",
+        "imagenet256-ldm"
+      ],
+      "mean_d_l_range": [
+        -0.0426,
+        0.0477
+      ],
+      "avg_mean_d_l": -0.001,
+      "avg_std_d_l": 0.0472
+    },
+    "detectability_ranking": [
+      {
+        "rank": 1,
+        "dataset": "imagenet256-dit-xl-2",
+        "mean_d_l": 0.0477,
+        "detection_reason": "Highest positive D(l) - most compressible artifacts"
+      },
+      {
+        "rank": 2,
+        "dataset": "imagenet256-biggan",
+        "mean_d_l": -0.0426,
+        "detection_reason": "Most negative D(l) - overly compressible (suspicious)"
+      },
+      {
+        "rank": 3,
+        "dataset": "imagenet256-adm",
+        "mean_d_l": 0.0126,
+        "detection_reason": "Positive D(l) with high variance"
+      },
+      {
+        "rank": 4,
+        "dataset": "imagenet256-admg",
+        "mean_d_l": 0.0095,
+        "detection_reason": "Positive D(l) with high variance"
+      },
+      {
+        "rank": 5,
+        "dataset": "imagenet256-gigagan",
+        "mean_d_l": -0.0281,
+        "detection_reason": "Negative D(l) similar to real but distinguishable"
+      },
+      {
+        "rank": 6,
+        "dataset": "imagenet256-ldm",
+        "mean_d_l": -0.0053,
+        "detection_reason": "Near-zero D(l) - hardest to distinguish from real"
+      }
+    ],
+    "compression_patterns": {
+      "easier_than_real": {
+        "datasets": [
+          "imagenet256-biggan",
+          "imagenet256-gigagan"
+        ],
+        "description": "These AI generators produce images that are even easier to compress than real images"
+      },
+      "harder_than_real": {
+        "datasets": [
+          "imagenet256-adm",
+          "imagenet256-admg",
+          "imagenet256-dit-xl-2"
+        ],
+        "description": "These AI generators produce images that are harder to compress than real images"
+      },
+      "similar_to_real": {
+        "datasets": [
+          "imagenet256-ldm"
+        ],
+        "description": "This generator produces images with compression characteristics very similar to real images"
+      }
+    }
+  },
+  "statistical_summary": {
+    "all_datasets": {
+      "d_l_range": [
+        -0.0426,
+        0.0477
+      ],
+      "d_l_span": 0.0903,
+      "mean_separation": {
+        "real_vs_ai_avg": -0.0261,
+        "max_separation": 0.0748,
+        "min_separation": -0.0218
+      }
+    },
+    "variance_analysis": {
+      "lowest_variance": {
+        "dataset": "imagenet256-ldm",
+        "std": 0.0338
+      },
+      "highest_variance": {
+        "dataset": "imagenet256-adm",
+        "std": 0.0654
+      },
+      "real_baseline_variance": {
+        "dataset": "val",
+        "std": 0.0339
+      }
+    }
+  },
+  "bayesian_integration": {
+    "priors_available": true,
+    "rigid_kde_integration": "Available - use rigid_per_generator_distributions.json",
+    "srec_d_l_values": "Current results can serve as likelihood estimates",
+    "next_steps": [
+      "Train 1-class detectors for each dataset",
+      "Generate 7x7 likelihood matrix",
+      "Combine RIGID priors with SReC likelihoods",
+      "Evaluate Bayesian framework performance"
+    ]
+  }
+}

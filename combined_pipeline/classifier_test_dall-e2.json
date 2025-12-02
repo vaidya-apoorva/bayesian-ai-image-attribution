@@ -1,0 +1,50 @@
+[
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/rotate000000160402.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.001194304320961237,
+    "class_1_prob": 0.9988056421279907,
+    "predicted_class": 1,
+    "correct": true
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/rotate000000527345.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.0019939288031309843,
+    "class_1_prob": 0.9980060458183289,
+    "predicted_class": 1,
+    "correct": true
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/000000424712.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.0002867321309167892,
+    "class_1_prob": 0.9997132420539856,
+    "predicted_class": 1,
+    "correct": true
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img360.png",
+    "true_label": "AI",
+    "class_0_prob": 0.9292065501213074,
+    "class_1_prob": 0.07079342007637024,
+    "predicted_class": 0,
+    "correct": true
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img827.png",
+    "true_label": "AI",
+    "class_0_prob": 0.9755202531814575,
+    "class_1_prob": 0.024479687213897705,
+    "predicted_class": 0,
+    "correct": true
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img495.png",
+    "true_label": "AI",
+    "class_0_prob": 0.9916542768478394,
+    "class_1_prob": 0.00834564957767725,
+    "predicted_class": 0,
+    "correct": true
+  }
+]

@@ -2,7 +2,6 @@ from pathlib import Path
 from typing import Callable, Optional, Tuple, Union
 
 import torch
-import torchvision.transforms.v2 as tf
 import torchvision.transforms as T
 from PIL import Image
 from torchvision.datasets import VisionDataset

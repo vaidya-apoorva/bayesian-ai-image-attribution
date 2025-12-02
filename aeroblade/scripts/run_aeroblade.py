@@ -31,7 +31,7 @@ def main(args):
     )
 
     # save and display results
-    csv_file_path = args.output_dir / "JPEG80" / "raise_distances.csv"
+    csv_file_path = args.output_dir / "distances.csv"
     distances.to_csv(csv_file_path, index=False)
     print(distances)
     print(f"\nSaving distances to {csv_file_path}.\nDone.")

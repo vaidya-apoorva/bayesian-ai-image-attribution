@@ -1,6 +1,8 @@
 """
-Analyze Bayesian Attribution Performance
-Analyzes how well the Bayesian approach (prior + likelihood) performs for generator attribution
+Analyze Bayesian Attribution Performance (Including Real Images)
+- Uses EXACT display names and order:
+  ["Firefly", "SD-XL", "DALL.E3", "Midj.-V6", "DALL.E2", "SD-1.5", "Midj.-V5", "Real"]
+- Includes REAL images (coco) in attribution analysis
 """
 
 import json
@@ -9,329 +11,618 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
 from collections import defaultdict
-import pandas as pd
 
-# Set style
-plt.style.use('seaborn-v0_8-darkgrid')
-sns.set_palette("husl")
+# -----------------------------------------------------------------------------
+# Styling
+# -----------------------------------------------------------------------------
+try:
+    plt.style.use('seaborn-v0_8-darkgrid')
+except Exception:
+    try:
+        plt.style.use('seaborn-darkgrid')
+    except Exception:
+        try:
+            sns.set_theme(style='darkgrid')
+        except Exception:
+            plt.style.use('default')
+try:
+    sns.set_palette("husl")
+except Exception:
+    pass
 
-def extract_true_generator(image_path):
-    """Extract true generator from filename"""
-    path = Path(image_path)
-    filename = path.name
+# -----------------------------------------------------------------------------
+# Canonical internal IDs and REQUIRED display names/order
+# -----------------------------------------------------------------------------
+CANON_IDS = [
+    "firefly",
+    "sdxl",
+    "dall-e3",
+    "midjourneyV6",
+    "dall-e2",
+    "stable_diffusion_1-5",
+    "midjourneyV5",
+    "coco",  # Added COCO as a legitimate class
+]
 
-    generators = ['dalle2', 'dalle3', 'firefly', 'midjourneyV5', 'midjourneyV6',
-                  'sdxl', 'stable_diffusion_1_5', 'coco']
+DISPLAY_ORDER = [
+    "Firefly",
+    "SD-XL",
+    "DALL.E3",
+    "Midj.-V6",
+    "DALL.E2",
+    "SD-1.5",
+    "Midj.-V5",
+    "Real",  # Added Real as display name for COCO
+]
 
-    for gen in generators:
-        if gen in filename:
-            return gen
+DISPLAY_TO_CANON = {
+    "Firefly": "firefly",
+    "SD-XL": "sdxl",
+    "DALL.E3": "dall-e3",
+    "Midj.-V6": "midjourneyV6",
+    "DALL.E2": "dall-e2",
+    "SD-1.5": "stable_diffusion_1-5",
+    "Midj.-V5": "midjourneyV5",
+    "Real": "coco",  # Added mapping for Real -> coco
+}
+CANON_TO_DISPLAY = {v: k for k, v in DISPLAY_TO_CANON.items()}
+
+REAL_TAGS = {"coco", "imagenet", "laion", "real"}
+
+ALIAS_TO_CANON = {
+    "dalle2": "dall-e2",
+    "dalle-2": "dall-e2",
+    "dall-e-2": "dall-e2",
+    "dall.e2": "dall-e2",
+    "dalle3": "dall-e3",
+    "dalle-3": "dall-e3",
+    "dall-e-3": "dall-e3",
+    "dall.e3": "dall-e3",
+    "firefly": "firefly",
+    "adobe_firefly": "firefly",
+    "adobe-firefly": "firefly",
+    "midjourneyv5": "midjourneyV5",
+    "midjourney-v5": "midjourneyV5",
+    "midj.-v5": "midjourneyV5",
+    "mjv5": "midjourneyV5",
+    "midjourneyv6": "midjourneyV6",
+    "midjourney-v6": "midjourneyV6",
+    "midj.-v6": "midjourneyV6",
+    "mjv6": "midjourneyV6",
+    "sdxl": "sdxl",
+    "sd-xl": "sdxl",
+    "stable-diffusion-xl": "sdxl",
+    "stable_diffusion_1_5": "stable_diffusion_1-5",
+    "stable-diffusion-1-5": "stable_diffusion_1-5",
+    "stable_diffusion_1-5": "stable_diffusion_1-5",
+    "sd15": "stable_diffusion_1-5",
+    "sd-1.5": "stable_diffusion_1-5",
+}
+
+SUBSTRING_TOKENS = sorted(ALIAS_TO_CANON.keys(), key=len, reverse=True)
+
+# -----------------------------------------------------------------------------
+# Canonicalization helpers
+# -----------------------------------------------------------------------------
+def canonicalize_label(raw: str):
+    if raw is None:
+        return None
+    s = str(raw).strip()
+    if not s:
+        return None
+    s_l = s.lower()
+
+    for cid in CANON_IDS:
+        if s_l == cid.lower():
+            return cid
+
+    if s_l in ALIAS_TO_CANON:
+        return ALIAS_TO_CANON[s_l]
+
+    for token in SUBSTRING_TOKENS:
+        if token in s_l:
+            return ALIAS_TO_CANON[token]
+
+    if any(tag in s_l for tag in REAL_TAGS):
+        return "coco"  # Return coco instead of REAL to include in analysis
 
     return None
 
-def load_results(json_path):
-    """Load and parse results"""
-    with open(json_path, 'r') as f:
-        data = json.load(f)
+
+def extract_true_generator(image_path):
+    p = Path(str(image_path))
+    full = str(p).lower()
+
+    cand = canonicalize_label(full)
+    if cand:
+        return cand
+
+    for parent in p.parents:
+        cand = canonicalize_label(parent.name)
+        if cand:
+            return cand
+
+    cand = canonicalize_label(p.name)
+    if cand:
+        return cand
+
+    parts = [x.lower() for x in p.parts]
+    if "dataset_512" in parts:
+        try:
+            idx = parts.index("dataset_512")
+            cand = canonicalize_label(parts[idx + 1])
+            if cand:
+                return cand
+        except Exception:
+            pass
+
+    return None
+
+# -----------------------------------------------------------------------------
+# IO + parsing (including Real images)
+# -----------------------------------------------------------------------------
+def load_results(json_path: Path):
+    data = json.loads(Path(json_path).read_text())
 
     results = []
-    for item in data:
-        true_gen = extract_true_generator(item['image_path'])
-        if true_gen:
-            results.append({
-                'image_path': item['image_path'],
-                'true_generator': true_gen,
-                'predicted_generator': item['predicted_generator'],
-                'confidence': item['confidence'],
-                'posteriors': item['posteriors'],
-                'correct': true_gen == item['predicted_generator']
-            })
+    unmatched = 0
+    matched_real = 0
+    matched_counts = {cid: 0 for cid in CANON_IDS}
 
+    for item in data:
+        img_path = item.get("image_path", "")
+        true_gen = extract_true_generator(img_path)
+
+        if true_gen is None:
+            unmatched += 1
+            continue
+        # Remove the skip for REAL images - now coco is included in CANON_IDS
+        # if true_gen == "REAL":
+        #     matched_real += 1
+        #     continue
+
+        pred_raw = item.get("predicted_generator")
+        pred_gen = canonicalize_label(pred_raw)
+        if pred_gen is None:
+            continue
+            continue
+
+        if true_gen not in CANON_IDS or pred_gen not in CANON_IDS:
+            continue
+
+        matched_counts[true_gen] += 1
+
+        post = item.get("posteriors", {})
+        canon_post = {}
+        if isinstance(post, dict):
+            for k, v in post.items():
+                ck = canonicalize_label(k)
+                if ck in CANON_IDS:
+                    try:
+                        canon_post[ck] = float(v)
+                    except Exception:
+                        pass
+
+        results.append({
+            "image_path": img_path,
+            "true_generator": true_gen,
+            "predicted_generator": pred_gen,
+            "confidence": float(item.get("confidence", 0.0)),
+            "posteriors": canon_post,
+            "correct": (true_gen == pred_gen),
+        })
+
+    print(f"Debug: matched_counts(including Real)={matched_counts}, matched_real_legacy={matched_real}, unmatched={unmatched}")
     return results
 
+# -----------------------------------------------------------------------------
+# Analyses
+# -----------------------------------------------------------------------------
 def analyze_performance(results):
-    """Analyze overall performance"""
     total = len(results)
-    correct = sum(1 for r in results if r['correct'])
-    accuracy = correct / total * 100
+    correct = sum(1 for r in results if r["correct"])
+    acc = (correct / total * 100.0) if total > 0 else 0.0
 
-    confidences = [r['confidence'] for r in results]
-    correct_confidences = [r['confidence'] for r in results if r['correct']]
-    wrong_confidences = [r['confidence'] for r in results if not r['correct']]
+    confs = [r["confidence"] for r in results]
+    confs_c = [r["confidence"] for r in results if r["correct"]]
+    confs_w = [r["confidence"] for r in results if not r["correct"]]
+
+    mean_conf = float(np.mean(confs)) if confs else 0.0
+    median_conf = float(np.median(confs)) if confs else 0.0
+    mean_conf_c = float(np.mean(confs_c)) if confs_c else 0.0
+    mean_conf_w = float(np.mean(confs_w)) if confs_w else 0.0
 
     return {
-        'total': total,
-        'correct': correct,
-        'accuracy': accuracy,
-        'mean_confidence': np.mean(confidences),
-        'median_confidence': np.median(confidences),
-        'mean_confidence_correct': np.mean(correct_confidences) if correct_confidences else 0,
-        'mean_confidence_wrong': np.mean(wrong_confidences) if wrong_confidences else 0
+        "total": total,
+        "correct": correct,
+        "accuracy": acc,  # percent
+        "mean_confidence": mean_conf,
+        "median_confidence": median_conf,
+        "mean_confidence_correct": mean_conf_c,
+        "mean_confidence_wrong": mean_conf_w,
     }
 
+
 def per_generator_analysis(results):
-    """Analyze performance per generator"""
-    generator_stats = defaultdict(lambda: {'total': 0, 'correct': 0, 'confidences': []})
-
+    stats = defaultdict(lambda: {"total": 0, "correct": 0, "confs": []})
     for r in results:
-        gen = r['true_generator']
-        generator_stats[gen]['total'] += 1
-        if r['correct']:
-            generator_stats[gen]['correct'] += 1
-        generator_stats[gen]['confidences'].append(r['confidence'])
+        g = r["true_generator"]
+        stats[g]["total"] += 1
+        stats[g]["correct"] += int(r["correct"])
+        stats[g]["confs"].append(r["confidence"])
 
-    # Calculate accuracy and mean confidence per generator
-    per_gen_results = {}
-    for gen, stats in generator_stats.items():
-        per_gen_results[gen] = {
-            'count': stats['total'],
-            'accuracy': stats['correct'] / stats['total'] * 100,
-            'mean_confidence': np.mean(stats['confidences']),
-            'median_confidence': np.median(stats['confidences'])
-        }
+    per_gen = {}
+    for cid in CANON_IDS:
+        s = stats[cid]
+        if s["total"] == 0:
+            per_gen[cid] = {"count": 0, "accuracy": 0.0, "mean_confidence": 0.0, "median_confidence": 0.0}
+        else:
+            per_gen[cid] = {
+                "count": s["total"],
+                "accuracy": s["correct"] / s["total"] * 100.0,
+                "mean_confidence": float(np.mean(s["confs"])),
+                "median_confidence": float(np.median(s["confs"])),
+            }
+    return per_gen
 
-    return per_gen_results
 
 def create_confusion_matrix(results):
-    """Create confusion matrix"""
-    generators = sorted(list(set([r['true_generator'] for r in results])))
-    n = len(generators)
-    confusion = np.zeros((n, n))
+    n = len(CANON_IDS)
+    M = np.zeros((n, n), dtype=float)
+    idx = {cid: i for i, cid in enumerate(CANON_IDS)}
+    for r in results:
+        ti = idx[r["true_generator"]]
+        pi = idx[r["predicted_generator"]]
+        M[ti, pi] += 1.0
+    return M
 
-    gen_to_idx = {gen: i for i, gen in enumerate(generators)}
+# -----------------------------------------------------------------------------
+# Plotting (uses requested display names/order)
+# -----------------------------------------------------------------------------
+def plot_accuracy_by_generator(per_gen, out_dir: Path):
+    gens_disp = DISPLAY_ORDER[:]
+    gens_canon = [DISPLAY_TO_CANON[g] for g in gens_disp]
+    accs = [per_gen[c]["accuracy"] for c in gens_canon]
+    counts = [per_gen[c]["count"] for c in gens_canon]
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    bars = ax.bar(gens_disp, accs, alpha=0.85)
+
+    for b, c, a in zip(bars, counts, accs):
+        ax.text(b.get_x() + b.get_width()/2., b.get_height(), f"{a:.1f}%\n(n={c})",
+                ha="center", va="bottom", fontsize=9)
+
+    ax.set_xlabel("Generator", fontsize=11, fontweight="bold")
+    ax.set_ylabel("Accuracy (%)", fontsize=11, fontweight="bold")
+    ax.set_title("Bayesian Attribution Accuracy by Generator", fontsize=13, fontweight="bold")
+    ax.set_ylim([0, 105])
+    plt.xticks(rotation=45, ha="right", fontsize=9)
+    ax.grid(axis="y", alpha=0.3)
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    prefix = out_dir.name  # e.g. "aeroblade" or "rigid"
+    base_name = f"{prefix}_accuracy_by_generator"
+    plt.tight_layout()
+    plt.savefig(out_dir / f"{base_name}.png", dpi=300, bbox_inches="tight")
+    plt.savefig(out_dir / f"{base_name}.pdf", bbox_inches="tight")
+    plt.close()
+
+
+
+# def plot_confidence_by_generator(per_gen, out_dir: Path):
+#     gens_disp = DISPLAY_ORDER[:]
+#     gens_canon = [DISPLAY_TO_CANON[g] for g in gens_disp]
+#     confs = [per_gen[c]["mean_confidence"] for c in gens_canon]
+#
+#     fig, ax = plt.subplots(figsize=(10, 5))
+#     bars = ax.bar(gens_disp, confs, alpha=0.85)
+#
+#     for b, c in zip(bars, confs):
+#         ax.text(b.get_x() + b.get_width()/2., b.get_height(), f"{c:.3f}",
+#                 ha="center", va="bottom", fontsize=9)
+#
+#     ax.set_xlabel("Generator", fontsize=11, fontweight="bold")
+#     ax.set_ylabel("Mean Confidence", fontsize=11, fontweight="bold")
+#     ax.set_title("Mean Prediction Confidence by Generator", fontsize=13, fontweight="bold")
+#     ax.set_ylim([0, 1.05])
+#     plt.xticks(rotation=45, ha="right", fontsize=9)
+#     ax.grid(axis="y", alpha=0.3)
+#
+#     out_dir.mkdir(parents=True, exist_ok=True)
+#     plt.tight_layout()
+#     plt.savefig(out_dir / "confidence_by_generator.png", dpi=300, bbox_inches="tight")
+#     plt.close()
+#
+
+# def plot_confusion_matrices(M, acc_percent, out_dir: Path):
+#     """Two-panel: raw counts + row-normalized, with EXACT display order and accuracy in title."""
+#     row_sums = M.sum(axis=1, keepdims=True)
+#     row_sums[row_sums == 0] = 1.0
+#     M_norm = M / row_sums
+#
+#     labels = DISPLAY_ORDER[:]
+#     acc_frac = (acc_percent / 100.0) if np.isfinite(acc_percent) else 0.0  # e.g., 0.749
+#
+#     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6), constrained_layout=True)
+#
+#     sns.heatmap(M, annot=True, fmt=".0f", cmap="Blues",
+#                 xticklabels=labels, yticklabels=labels,
+#                 cbar_kws={"label": "Count"}, ax=ax1)
+#     ax1.set_xlabel("Predicted Generator", fontsize=11, fontweight="bold")
+#     ax1.set_ylabel("True Generator", fontsize=11, fontweight="bold")
+#     ax1.set_title(f"Confusion Matrix (Counts)\nacc={acc_frac:.3f}", fontsize=13, fontweight="bold")
+#     ax1.tick_params(axis="x", labelrotation=45)
+#
+#     sns.heatmap(M_norm, annot=True, fmt=".2f", cmap="Blues",
+#                 xticklabels=labels, yticklabels=labels,
+#                 cbar_kws={"label": "Proportion"}, ax=ax2, vmin=0, vmax=1)
+#     ax2.set_xlabel("Predicted Generator", fontsize=11, fontweight="bold")
+#     ax2.set_ylabel("True Generator", fontsize=11, fontweight="bold")
+#     ax2.set_title(f"Confusion Matrix (Row-Normalized)\nacc={acc_frac:.3f}", fontsize=13, fontweight="bold")
+#     ax2.tick_params(axis="x", labelrotation=45)
+#
+#     out_dir.mkdir(parents=True, exist_ok=True)
+#     prefix = out_dir.name
+#     plt.savefig(out_dir / f"{prefix}_confusion_matrix.png", dpi=300, bbox_inches="tight")
+#     plt.savefig(out_dir / f"{prefix}_confusion_matrix.pdf", bbox_inches="tight")
+#     plt.close()
+#
+
+
+def plot_confusion_matrices(M, acc_percent, out_dir: Path):
+    """Save raw-count and row-normalized confusion matrices as separate figures (both .png and .pdf)."""
+    row_sums = M.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1.0
+    M_norm = M / row_sums
+
+    labels = DISPLAY_ORDER[:]
+    acc_frac = (acc_percent / 100.0) if np.isfinite(acc_percent) else 0.0
+
+    out_dir.mkdir(parents=True, exist_ok=True)
+    prefix = out_dir.name
+
+    # -------------------------------------------------------------------------
+    # RAW COUNTS CONFUSION MATRIX
+    # -------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8, 7))
+    sns.heatmap(M, annot=True, fmt=".0f", cmap="Blues",
+                xticklabels=labels, yticklabels=labels,
+                cbar_kws={"label": "Count"}, ax=ax)
+    ax.set_xlabel("Predicted Generator", fontsize=11, fontweight="bold")
+    ax.set_ylabel("True Generator", fontsize=11, fontweight="bold")
+    ax.set_title(f"Confusion Matrix (Counts)\nacc={acc_frac:.3f}", fontsize=13, fontweight="bold")
+    ax.tick_params(axis="x", labelrotation=45)
+
+    plt.tight_layout()
+    plt.savefig(out_dir / f"{prefix}_confusion_matrix_raw.png", dpi=300, bbox_inches="tight")
+    plt.savefig(out_dir / f"{prefix}_confusion_matrix_raw.pdf", bbox_inches="tight")
+    plt.close()
+
+    # -------------------------------------------------------------------------
+    # ROW-NORMALIZED CONFUSION MATRIX
+    # -------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(8, 7))
+    sns.heatmap(M_norm, annot=True, fmt=".2f", cmap="Blues",
+                xticklabels=labels, yticklabels=labels,
+                cbar_kws={"label": "Proportion"}, ax=ax, vmin=0, vmax=1)
+    ax.set_xlabel("Predicted Generator", fontsize=11, fontweight="bold")
+    ax.set_ylabel("True Generator", fontsize=11, fontweight="bold")
+    ax.set_title(f"Confusion Matrix (Row-Normalized)\nacc={acc_frac:.3f}", fontsize=13, fontweight="bold")
+    ax.tick_params(axis="x", labelrotation=45)
+
+    plt.tight_layout()
+    plt.savefig(out_dir / f"{prefix}_confusion_matrix_norm.png", dpi=300, bbox_inches="tight")
+    plt.savefig(out_dir / f"{prefix}_confusion_matrix_norm.pdf", bbox_inches="tight")
+    plt.close()
+
+def create_confusion_matrix(results):
+    n = len(CANON_IDS)
+    M = np.zeros((n, n), dtype=float)
+    idx = {cid: i for i, cid in enumerate(CANON_IDS)}
+    for r in results:
+        ti = idx[r["true_generator"]]
+        pi = idx[r["predicted_generator"]]
+        M[ti, pi] += 1.0
+    return M
+
+
+def plot_binary_confusion_real_vs_ai(results, out_dir: Path):
+    """
+    Build and save separate confusion matrices for Real vs AI:
+    1. Raw counts
+    2. Row-normalized proportions
+    """
+    # 0 = AI, 1 = Real
+    M = np.zeros((2, 2), dtype=float)
 
     for r in results:
-        true_idx = gen_to_idx[r['true_generator']]
-        pred_idx = gen_to_idx[r['predicted_generator']]
-        confusion[true_idx, pred_idx] += 1
+        true_is_real = (r["true_generator"] == "coco")
+        pred_is_real = (r["predicted_generator"] == "coco")
 
-    return confusion, generators
+        ti = 1 if true_is_real else 0
+        pi = 1 if pred_is_real else 0
+        M[ti, pi] += 1.0
 
-def plot_accuracy_by_generator(per_gen_results, output_dir):
-    """Plot accuracy by generator"""
-    generators = sorted(per_gen_results.keys())
-    accuracies = [per_gen_results[g]['accuracy'] for g in generators]
-    counts = [per_gen_results[g]['count'] for g in generators]
+    acc = (M[0, 0] + M[1, 1]) / M.sum() if M.sum() > 0 else 0.0
+    acc_frac = float(acc)
 
-    fig, ax = plt.subplots(figsize=(12, 6))
-    bars = ax.bar(generators, accuracies, color='steelblue', alpha=0.8)
+    # Row-normalized matrix
+    row_sums = M.sum(axis=1, keepdims=True)
+    row_sums[row_sums == 0] = 1.0
+    M_norm = M / row_sums
 
-    # Add count labels on bars
-    for i, (bar, count) in enumerate(zip(bars, counts)):
-        height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2., height,
-                f'{height:.1f}%\n(n={count})',
-                ha='center', va='bottom', fontsize=10)
+    labels = ["AI", "Real"]
+    out_dir.mkdir(parents=True, exist_ok=True)
+    prefix = out_dir.name
 
-    ax.set_xlabel('Generator', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Accuracy (%)', fontsize=12, fontweight='bold')
-    ax.set_title('Bayesian Attribution Accuracy by Generator', fontsize=14, fontweight='bold')
-    ax.set_ylim([0, 105])
-    plt.xticks(rotation=45, ha='right')
-    ax.grid(axis='y', alpha=0.3)
-
+    # -------------------------------------------------------------------------
+    # RAW COUNTS CONFUSION MATRIX
+    # -------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(6, 5))
+    sns.heatmap(M, annot=True, fmt=".0f", cmap="Blues",
+                xticklabels=labels, yticklabels=labels,
+                cbar_kws={"label": "Count"}, ax=ax)
+    ax.set_xlabel("Predicted", fontsize=11, fontweight="bold")
+    ax.set_ylabel("True", fontsize=11, fontweight="bold")
+    ax.set_title(f"Real vs AI (Counts)\nacc={acc_frac:.3f}", fontsize=13, fontweight="bold")
+    ax.tick_params(axis="x", labelrotation=45)
     plt.tight_layout()
-    plt.savefig(output_dir / 'accuracy_by_generator.png', dpi=300, bbox_inches='tight')
-    plt.savefig(output_dir / 'accuracy_by_generator.pdf', bbox_inches='tight')
+    plt.savefig(out_dir / f"{prefix}_binary_confusion_real_vs_ai_raw.png",
+                dpi=300, bbox_inches="tight")
+    plt.savefig(out_dir / f"{prefix}_binary_confusion_real_vs_ai_raw.pdf",
+                bbox_inches="tight")
     plt.close()
 
-def plot_confidence_by_generator(per_gen_results, output_dir):
-    """Plot confidence by generator"""
-    generators = sorted(per_gen_results.keys())
-    confidences = [per_gen_results[g]['mean_confidence'] for g in generators]
-
-    fig, ax = plt.subplots(figsize=(12, 6))
-    bars = ax.bar(generators, confidences, color='coral', alpha=0.8)
-
-    # Add value labels on bars
-    for bar in bars:
-        height = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width()/2., height,
-                f'{height:.3f}',
-                ha='center', va='bottom', fontsize=10)
-
-    ax.set_xlabel('Generator', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Mean Confidence', fontsize=12, fontweight='bold')
-    ax.set_title('Mean Prediction Confidence by Generator', fontsize=14, fontweight='bold')
-    ax.set_ylim([0, 1.1])
-    plt.xticks(rotation=45, ha='right')
-    ax.grid(axis='y', alpha=0.3)
-
+    # -------------------------------------------------------------------------
+    # ROW-NORMALIZED CONFUSION MATRIX
+    # -------------------------------------------------------------------------
+    fig, ax = plt.subplots(figsize=(6, 5))
+    sns.heatmap(M_norm, annot=True, fmt=".2f", cmap="Blues",
+                xticklabels=labels, yticklabels=labels,
+                cbar_kws={"label": "Proportion"}, ax=ax, vmin=0, vmax=1)
+    ax.set_xlabel("Predicted", fontsize=11, fontweight="bold")
+    ax.set_ylabel("True", fontsize=11, fontweight="bold")
+    ax.set_title("Real vs AI (Row-Normalized)", fontsize=13, fontweight="bold")
+    ax.tick_params(axis="x", labelrotation=45)
     plt.tight_layout()
-    plt.savefig(output_dir / 'confidence_by_generator.png', dpi=300, bbox_inches='tight')
-    plt.savefig(output_dir / 'confidence_by_generator.pdf', bbox_inches='tight')
+    plt.savefig(out_dir / f"{prefix}_binary_confusion_real_vs_ai_norm.png",
+                dpi=300, bbox_inches="tight")
+    plt.savefig(out_dir / f"{prefix}_binary_confusion_real_vs_ai_norm.pdf",
+                bbox_inches="tight")
     plt.close()
 
-def plot_confusion_matrix(confusion, generators, output_dir):
-    """Plot confusion matrix"""
-    # Normalize by row (true labels)
-    confusion_norm = confusion / confusion.sum(axis=1, keepdims=True)
+# def plot_confidence_distribution(results, out_dir: Path):
+#     conf_c = [r["confidence"] for r in results if r["correct"]]
+#     conf_w = [r["confidence"] for r in results if not r["correct"]]
+#
+#     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+#
+#     ax1.hist(conf_c, bins=30, alpha=0.7, label="Correct", color="green", edgecolor="black")
+#     ax1.hist(conf_w, bins=30, alpha=0.7, label="Incorrect", color="red", edgecolor="black")
+#     ax1.set_xlabel("Confidence", fontsize=11, fontweight="bold")
+#     ax1.set_ylabel("Frequency", fontsize=11, fontweight="bold")
+#     ax1.set_title("Confidence Distribution", fontsize=13, fontweight="bold")
+#     ax1.legend()
+#     ax1.grid(alpha=0.3)
+#
+#     box = ax2.boxplot([conf_c, conf_w], labels=["Correct", "Incorrect"], patch_artist=True)
+#     box["boxes"][0].set_facecolor("green"); box["boxes"][0].set_alpha(0.7)
+#     box["boxes"][1].set_facecolor("red");   box["boxes"][1].set_alpha(0.7)
+#     ax2.set_ylabel("Confidence", fontsize=11, fontweight="bold")
+#     ax2.set_title("Confidence Box Plot", fontsize=13, fontweight="bold")
+#     ax2.grid(axis="y", alpha=0.3)
+#
+#     out_dir.mkdir(parents=True, exist_ok=True)
+#     plt.tight_layout()
+#     plt.savefig(out_dir / "confidence_distribution.png", dpi=300, bbox_inches="tight")
+#     plt.close()
+#
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 8))
+# def plot_accuracy_confidence_scatter(per_gen, out_dir: Path):
+#     gens_disp = DISPLAY_ORDER[:]
+#     gens_canon = [DISPLAY_TO_CANON[g] for g in gens_disp]
+#     accs = [per_gen[c]["accuracy"] for c in gens_canon]
+#     confs = [per_gen[c]["mean_confidence"] for c in gens_canon]
+#     counts = [per_gen[c]["count"] for c in gens_canon]
+#
+#     fig, ax = plt.subplots(figsize=(9, 7))
+#     ax.scatter(confs, accs, s=[max(10, c * 2) for c in counts],
+#                alpha=0.6, c=range(len(gens_disp)), cmap="tab10", edgecolors="k")
+#
+#     for x, y, label in zip(confs, accs, gens_disp):
+#         ax.annotate(label, (x, y), xytext=(6, 6), textcoords="offset points",
+#                     fontsize=9, fontweight="bold")
+#
+#     ax.set_xlabel("Mean Confidence", fontsize=11, fontweight="bold")
+#     ax.set_ylabel("Accuracy (%)", fontsize=11, fontweight="bold")
+#     ax.set_title("Accuracy vs Confidence by Generator", fontsize=13, fontweight="bold")
+#     ax.grid(alpha=0.3)
+#     ax.plot([0, 1], [0, 100], "k--", alpha=0.25, label="Perfect calibration")
+#     ax.legend(loc="lower right", fontsize=9)
+#
+#     out_dir.mkdir(parents=True, exist_ok=True)
+#     plt.tight_layout()
+#     plt.savefig(out_dir / "accuracy_vs_confidence.png", dpi=300, bbox_inches="tight")
+#     plt.close()
+#
 
-    # Raw counts
-    sns.heatmap(confusion, annot=True, fmt='.0f', cmap='Blues',
-                xticklabels=generators, yticklabels=generators,
-                cbar_kws={'label': 'Count'}, ax=ax1)
-    ax1.set_xlabel('Predicted Generator', fontsize=12, fontweight='bold')
-    ax1.set_ylabel('True Generator', fontsize=12, fontweight='bold')
-    ax1.set_title('Confusion Matrix (Counts)', fontsize=14, fontweight='bold')
-    plt.setp(ax1.get_xticklabels(), rotation=45, ha='right')
-    plt.setp(ax1.get_yticklabels(), rotation=0)
-
-    # Normalized
-    sns.heatmap(confusion_norm, annot=True, fmt='.2f', cmap='Blues',
-                xticklabels=generators, yticklabels=generators,
-                cbar_kws={'label': 'Proportion'}, ax=ax2, vmin=0, vmax=1)
-    ax2.set_xlabel('Predicted Generator', fontsize=12, fontweight='bold')
-    ax2.set_ylabel('True Generator', fontsize=12, fontweight='bold')
-    ax2.set_title('Confusion Matrix (Normalized by True Label)', fontsize=14, fontweight='bold')
-    plt.setp(ax2.get_xticklabels(), rotation=45, ha='right')
-    plt.setp(ax2.get_yticklabels(), rotation=0)
-
-    plt.tight_layout()
-    plt.savefig(output_dir / 'confusion_matrix.png', dpi=300, bbox_inches='tight')
-    plt.savefig(output_dir / 'confusion_matrix.pdf', bbox_inches='tight')
-    plt.close()
-
-def plot_confidence_distribution(results, output_dir):
-    """Plot confidence distribution for correct vs incorrect predictions"""
-    correct_confidences = [r['confidence'] for r in results if r['correct']]
-    wrong_confidences = [r['confidence'] for r in results if not r['correct']]
-
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
-
-    # Histogram
-    ax1.hist(correct_confidences, bins=30, alpha=0.7, label='Correct', color='green', edgecolor='black')
-    ax1.hist(wrong_confidences, bins=30, alpha=0.7, label='Incorrect', color='red', edgecolor='black')
-    ax1.set_xlabel('Confidence', fontsize=12, fontweight='bold')
-    ax1.set_ylabel('Frequency', fontsize=12, fontweight='bold')
-    ax1.set_title('Confidence Distribution', fontsize=14, fontweight='bold')
-    ax1.legend()
-    ax1.grid(alpha=0.3)
-
-    # Box plot
-    box_data = [correct_confidences, wrong_confidences]
-    bp = ax2.boxplot(box_data, labels=['Correct', 'Incorrect'], patch_artist=True)
-    bp['boxes'][0].set_facecolor('green')
-    bp['boxes'][0].set_alpha(0.7)
-    bp['boxes'][1].set_facecolor('red')
-    bp['boxes'][1].set_alpha(0.7)
-    ax2.set_ylabel('Confidence', fontsize=12, fontweight='bold')
-    ax2.set_title('Confidence Box Plot', fontsize=14, fontweight='bold')
-    ax2.grid(axis='y', alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig(output_dir / 'confidence_distribution.png', dpi=300, bbox_inches='tight')
-    plt.savefig(output_dir / 'confidence_distribution.pdf', bbox_inches='tight')
-    plt.close()
-
-def plot_accuracy_confidence_scatter(per_gen_results, output_dir):
-    """Plot accuracy vs confidence scatter"""
-    generators = sorted(per_gen_results.keys())
-    accuracies = [per_gen_results[g]['accuracy'] for g in generators]
-    confidences = [per_gen_results[g]['mean_confidence'] for g in generators]
-    counts = [per_gen_results[g]['count'] for g in generators]
-
-    fig, ax = plt.subplots(figsize=(10, 8))
-
-    scatter = ax.scatter(confidences, accuracies, s=[c*2 for c in counts],
-                        alpha=0.6, c=range(len(generators)), cmap='tab10')
-
-    # Add generator labels
-    for i, gen in enumerate(generators):
-        ax.annotate(gen, (confidences[i], accuracies[i]),
-                   xytext=(5, 5), textcoords='offset points',
-                   fontsize=10, fontweight='bold')
-
-    ax.set_xlabel('Mean Confidence', fontsize=12, fontweight='bold')
-    ax.set_ylabel('Accuracy (%)', fontsize=12, fontweight='bold')
-    ax.set_title('Accuracy vs Confidence by Generator', fontsize=14, fontweight='bold')
-    ax.grid(alpha=0.3)
-
-    # Add diagonal reference line
-    ax.plot([0, 1], [0, 100], 'k--', alpha=0.3, label='Perfect calibration')
-    ax.legend()
-
-    plt.tight_layout()
-    plt.savefig(output_dir / 'accuracy_vs_confidence.png', dpi=300, bbox_inches='tight')
-    plt.savefig(output_dir / 'accuracy_vs_confidence.pdf', bbox_inches='tight')
-    plt.close()
-
-def save_summary_report(overall_stats, per_gen_results, output_dir):
-    """Save detailed summary report"""
-    report_path = output_dir / 'performance_summary.txt'
-
-    with open(report_path, 'w') as f:
-        f.write("="*80 + "\n")
-        f.write("BAYESIAN ATTRIBUTION PERFORMANCE ANALYSIS\n")
-        f.write("="*80 + "\n\n")
+def save_summary_report(overall, per_gen, out_dir: Path):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    path = out_dir / "performance_summary.txt"
+    with open(path, "w") as f:
+        f.write("=" * 80 + "\n")
+        f.write("BAYESIAN ATTRIBUTION PERFORMANCE (Including Real Images)\n")
+        f.write("=" * 80 + "\n\n")
 
         f.write("OVERALL PERFORMANCE:\n")
-        f.write("-"*40 + "\n")
-        f.write(f"Total images analyzed: {overall_stats['total']}\n")
-        f.write(f"Correct predictions: {overall_stats['correct']}\n")
-        f.write(f"Overall accuracy: {overall_stats['accuracy']:.2f}%\n")
-        f.write(f"Mean confidence: {overall_stats['mean_confidence']:.4f}\n")
-        f.write(f"Median confidence: {overall_stats['median_confidence']:.4f}\n")
-        f.write(f"Mean confidence (correct): {overall_stats['mean_confidence_correct']:.4f}\n")
-        f.write(f"Mean confidence (incorrect): {overall_stats['mean_confidence_wrong']:.4f}\n\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"Total images analyzed: {overall['total']}\n")
+        f.write(f"Correct predictions: {overall['correct']}\n")
+        f.write(f"Overall accuracy: {overall['accuracy']:.2f}%\n")
+        f.write(f"Mean confidence: {overall['mean_confidence']:.4f}\n")
+        f.write(f"Median confidence: {overall['median_confidence']:.4f}\n")
+        f.write(f"Mean confidence (correct): {overall['mean_confidence_correct']:.4f}\n")
+        f.write(f"Mean confidence (incorrect): {overall['mean_confidence_wrong']:.4f}\n\n")
 
-        f.write("PER-GENERATOR PERFORMANCE:\n")
-        f.write("-"*40 + "\n")
-        f.write(f"{'Generator':<25} {'Count':<8} {'Accuracy':<12} {'Mean Conf':<12}\n")
-        f.write("-"*80 + "\n")
+        f.write("PER-GENERATOR PERFORMANCE (Including Real Images):\n")
+        f.write("-" * 40 + "\n")
+        f.write(f"{'Generator':<12} {'Count':>7} {'Accuracy':>12} {'Mean Conf':>12}\n")
+        f.write("-" * 80 + "\n")
+        for disp in DISPLAY_ORDER:
+            cid = DISPLAY_TO_CANON[disp]
+            s = per_gen.get(cid, {"count": 0, "accuracy": 0.0, "mean_confidence": 0.0})
+            f.write(f"{disp:<12} {s['count']:>7} {s['accuracy']:>10.2f}% {s['mean_confidence']:>11.4f}\n")
+        f.write("\n" + "=" * 80 + "\n")
 
-        for gen in sorted(per_gen_results.keys()):
-            stats = per_gen_results[gen]
-            f.write(f"{gen:<25} {stats['count']:<8} {stats['accuracy']:>10.2f}% {stats['mean_confidence']:>11.4f}\n")
-
-        f.write("\n" + "="*80 + "\n")
-
+# -----------------------------------------------------------------------------
+# Main
+# -----------------------------------------------------------------------------
 def main():
-    # Paths
-    results_path = Path('/Users/apoorvavaidya/Desktop/Thesis/GITLAB/mt_apoorva_zero_shot_detector/combined_pipeline/results/BAYESIAN_RESULTS/bayesian_attribution_200_images_results.json')
-    output_dir = Path('/Users/apoorvavaidya/Desktop/Thesis/GITLAB/mt_apoorva_zero_shot_detector/combined_pipeline/results/bayesian_performance_analysis')
-    output_dir.mkdir(exist_ok=True)
+    import argparse
 
-    print("Loading results...")
+    parser = argparse.ArgumentParser(description="Analyze Bayesian Attribution Performance (Including Real Images; fixed display names)")
+    parser.add_argument("--results", type=str, default="results/BAYESIAN_RESULTS/bayesian_attribution_results.json",
+                        help="Path to the Bayesian attribution results JSON file")
+    parser.add_argument("--output", type=str, default="results/bayesian_performance_analysis",
+                        help="Output directory for analysis results")
+    args = parser.parse_args()
+
+    results_path = Path(args.results)
+    out_dir = Path(args.output)
+
+    print(f"Results file: {results_path}")
+    print(f"Output directory: {out_dir}")
+
+    print("\nLoading results...")
     results = load_results(results_path)
-    print(f"Loaded {len(results)} results")
+    print(f"Loaded {len(results)} AI-only items")
 
     print("\nAnalyzing overall performance...")
-    overall_stats = analyze_performance(results)
+    overall = analyze_performance(results)
 
     print("\nAnalyzing per-generator performance...")
-    per_gen_results = per_generator_analysis(results)
+    per_gen = per_generator_analysis(results)
 
-    print("\nCreating confusion matrix...")
-    confusion, generators = create_confusion_matrix(results)
+    print("\nBuilding confusion matrix (including Real, fixed display order)...")
+    M = create_confusion_matrix(results)
 
-    print("\nGenerating visualizations...")
-    plot_accuracy_by_generator(per_gen_results, output_dir)
-    print("  ✓ Accuracy by generator")
+    print("\nPlotting...")
+    plot_accuracy_by_generator(per_gen, out_dir);          print("  ✓ accuracy_by_generator")
+    # plot_confidence_by_generator(per_gen, out_dir);        print("  ✓ confidence_by_generator")
+    plot_confusion_matrices(M, overall['accuracy'], out_dir);  print("  ✓ confusion_matrix (raw+normalized)")
+    # plot_confidence_distribution(results, out_dir);        print("  ✓ confidence_distribution")
+    # plot_accuracy_confidence_scatter(per_gen, out_dir);    print("  ✓ accuracy_vs_confidence")
+    plot_binary_confusion_real_vs_ai(results, out_dir); print("  ✓ binary_confusion_real_vs_ai")
 
-    plot_confidence_by_generator(per_gen_results, output_dir)
-    print("  ✓ Confidence by generator")
+    print("\nSaving summary...")
+    save_summary_report(overall, per_gen, out_dir)
 
-    plot_confusion_matrix(confusion, generators, output_dir)
-    print("  ✓ Confusion matrix")
+    print("\n" + "="*80)
+    print("ANALYSIS COMPLETE (including Real, fixed display names/order)")
+    print("="*80)
+    print(f"Overall Accuracy: {overall['accuracy']:.2f}%")
+    print(f"Mean Confidence: {overall['mean_confidence']:.4f}")
+    print(f"Outputs saved to: {out_dir}")
 
-    plot_confidence_distribution(results, output_dir)
-    print("  ✓ Confidence distribution")
-
-    plot_accuracy_confidence_scatter(per_gen_results, output_dir)
-    print("  ✓ Accuracy vs confidence scatter")
-
-    print("\nSaving summary report...")
-    save_summary_report(overall_stats, per_gen_results, output_dir)
-
-    print(f"\n{'='*80}")
-    print("ANALYSIS COMPLETE")
-    print(f"{'='*80}")
-    print(f"\nOverall Accuracy: {overall_stats['accuracy']:.2f}%")
-    print(f"Mean Confidence: {overall_stats['mean_confidence']:.4f}")
-    print(f"\nAll outputs saved to: {output_dir}")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

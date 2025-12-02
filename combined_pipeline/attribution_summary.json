@@ -1,0 +1,23 @@
+{
+  "total_images": 20,
+  "predictions_count": {
+    "midjourneyV6": 8,
+    "midjourneyV5": 11,
+    "dall-e3": 1
+  },
+  "predictions_percentage": {
+    "midjourneyV6": 40.0,
+    "midjourneyV5": 55.00000000000001,
+    "dall-e3": 5.0
+  },
+  "average_confidence": {
+    "midjourneyV6": 0.3726636819705621,
+    "midjourneyV5": 0.3667618821673875,
+    "dall-e3": 0.2706175479064592
+  },
+  "confidence_std": {
+    "midjourneyV6": 0.06682584814407602,
+    "midjourneyV5": 0.05348825169650921,
+    "dall-e3": 0.0
+  }
+}

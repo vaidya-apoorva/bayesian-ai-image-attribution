@@ -102,6 +102,9 @@ class ImageFolder(data.Dataset):
              ) -> torch.Tensor:
         # x: 3HW
         img = Image.open(fp)
+        # Ensure image is RGB (handle grayscale images)
+        if img.mode != 'RGB':
+            img = img.convert('RGB')
         x = self.transforms(img)
         return self.to_tensor_not_normalized(x)
 

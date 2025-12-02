@@ -12,7 +12,7 @@ from diffusers.pipelines.stable_diffusion.pipeline_stable_diffusion_img2img impo
 from joblib.hashing import hash
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
-from torchvision.transforms.v2.functional import to_pil_image
+from torchvision.transforms.functional import to_pil_image
 from tqdm import tqdm
 
 from aeroblade.data import ImageFolder, read_files
@@ -68,11 +68,14 @@ def compute_reconstructions(
         # set up pipeline
         pipe = AutoPipelineForImage2Image.from_pretrained(
             repo_id,
-            torch_dtype=torch.float16,
+            torch_dtype=(torch.float16 if torch.cuda.is_available() else torch.float32),
             use_safetensors=True,
             variant="fp16" if "kandinsky-2" not in repo_id else None,
         )
-        pipe.enable_model_cpu_offload()
+        if torch.cuda.is_available():
+            pipe.enable_model_cpu_offload()
+        else:
+            pipe.to("cpu")
 
         # extract AE
         if hasattr(pipe, "vae"):
@@ -110,10 +113,12 @@ def compute_reconstructions(
 
             # encode
             try:
-                encoded = ae.encode(images)
-                latents = retrieve_latents(encoded, generator=generator)
-                # Debug: print latents tensor shape and dtype
-                print(f"Encoded latents shape: {latents.shape}, dtype: {latents.dtype}")
+                if not torch.cuda.is_available():
+                    images = images.to(dtype=torch.float32)
+                    encoded = ae.encode(images)
+                    latents = retrieve_latents(encoded, generator=generator)
+                    # Debug: print latents tensor shape and dtype
+                    print(f"Encoded latents shape: {latents.shape}, dtype: {latents.dtype}")
             except Exception as e:
                 print(f"Error during encoding: {e}")
                 raise

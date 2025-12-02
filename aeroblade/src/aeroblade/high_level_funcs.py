@@ -4,7 +4,7 @@ from typing import Callable, Optional
 import numpy as np
 import pandas as pd
 import torch
-import torchvision.transforms.v2 as tf
+from torchvision import transforms as tf
 from tqdm import tqdm
 
 from aeroblade.complexities import complexity_from_config

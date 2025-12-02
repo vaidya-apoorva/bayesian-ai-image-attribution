@@ -1,0 +1,352 @@
+[
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_131618.png",
+    "likelihoods": {
+      "dalle2": 0.25648078322410583,
+      "dalle3": 0.0002739796182140708,
+      "firefly": 0.0034082974307239056,
+      "midjourneyV5": 0.00037393427919596434,
+      "midjourneyV6": 0.013738643378019333,
+      "sdxl": 0.1566237062215805,
+      "stable_diffusion_1_5": 0.9991280436515808,
+      "coco": 0.3410849896239295
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.1465935688484833,
+      "dalle3": 0.00015701128762256227,
+      "firefly": 0.0019306231702715814,
+      "midjourneyV5": 0.00021256747994481695,
+      "midjourneyV6": 0.00784694732112033,
+      "sdxl": 0.08768257404688684,
+      "stable_diffusion_1_5": 0.5584797159507942,
+      "coco": 0.19709699189487645
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.5584797159507942
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_171759.png",
+    "likelihoods": {
+      "dalle2": 0.009254563599824905,
+      "dalle3": 5.129690006100418e-09,
+      "firefly": 0.7354755401611328,
+      "midjourneyV5": 9.270958980778232e-05,
+      "midjourneyV6": 6.9073904582217516e-12,
+      "sdxl": 0.9265892505645752,
+      "stable_diffusion_1_5": 0.9999847412109375,
+      "coco": 0.11657554867281172
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.0033755586219563934,
+      "dalle3": 1.876367994486371e-09,
+      "firefly": 0.2658629896532506,
+      "midjourneyV5": 3.363224289944841e-05,
+      "midjourneyV6": 2.882170670401749e-12,
+      "sdxl": 0.33103405594699525,
+      "stable_diffusion_1_5": 0.356705045004405,
+      "coco": 0.042988716651243035
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.356705045004405
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_147923.png",
+    "likelihoods": {
+      "dalle2": 0.4275456666946411,
+      "dalle3": 0.016139443963766098,
+      "firefly": 0.06791163235902786,
+      "midjourneyV5": 0.0005592976813204587,
+      "midjourneyV6": 3.621719102397947e-08,
+      "sdxl": 0.7107354998588562,
+      "stable_diffusion_1_5": 1.0,
+      "coco": 0.018580411979028513
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.19394252778074614,
+      "dalle3": 0.0073406013923385536,
+      "firefly": 0.030530551697560204,
+      "midjourneyV5": 0.00025233356227633274,
+      "midjourneyV6": 1.641776736431463e-08,
+      "sdxl": 0.31578700782141444,
+      "stable_diffusion_1_5": 0.4436257137446235,
+      "coco": 0.008521247583273562
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.4436257137446235
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_159671.png",
+    "likelihoods": {
+      "dalle2": 0.3895512521266937,
+      "dalle3": 0.09771337360143661,
+      "firefly": 0.13853482902050018,
+      "midjourneyV5": 0.4716719686985016,
+      "midjourneyV6": 0.20940044522285461,
+      "sdxl": 0.9899313449859619,
+      "stable_diffusion_1_5": 0.9999943971633911,
+      "coco": 0.07315748993359435
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.11716744145462345,
+      "dalle3": 0.029467879166511817,
+      "firefly": 0.04129535984891696,
+      "midjourneyV5": 0.1410989771162841,
+      "midjourneyV6": 0.06293855133300252,
+      "sdxl": 0.2916373377827415,
+      "stable_diffusion_1_5": 0.2941481199820625,
+      "coco": 0.02224633331585707
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.2941481199820625
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_107446.png",
+    "likelihoods": {
+      "dalle2": 0.0010576366912573576,
+      "dalle3": 0.006746928673237562,
+      "firefly": 0.44001591205596924,
+      "midjourneyV5": 0.05808558315038681,
+      "midjourneyV6": 0.0075456020422279835,
+      "sdxl": 0.0037020433228462934,
+      "stable_diffusion_1_5": 0.9999953508377075,
+      "coco": 0.15762307741598766
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.0006409266254829879,
+      "dalle3": 0.0040994958770848005,
+      "firefly": 0.26426529112916836,
+      "midjourneyV5": 0.03500915387476281,
+      "midjourneyV6": 0.004569434967572489,
+      "sdxl": 0.002197399434865052,
+      "stable_diffusion_1_5": 0.5926468133581301,
+      "coco": 0.09657148473293342
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.5926468133581301
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_50007.png",
+    "likelihoods": {
+      "dalle2": 0.6747586131095886,
+      "dalle3": 0.22540470957756042,
+      "firefly": 0.9262845516204834,
+      "midjourneyV5": 0.007466019131243229,
+      "midjourneyV6": 0.0033397215884178877,
+      "sdxl": 0.46180999279022217,
+      "stable_diffusion_1_5": 0.9999967813491821,
+      "coco": 0.08489891487294782
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.20168146851460167,
+      "dalle3": 0.06755120097687352,
+      "firefly": 0.27438598135871384,
+      "midjourneyV5": 0.0022194640404240447,
+      "midjourneyV6": 0.0009975269136540269,
+      "sdxl": 0.135199968830364,
+      "stable_diffusion_1_5": 0.29230909516397885,
+      "coco": 0.025655294201390053
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.29230909516397885
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_186923.png",
+    "likelihoods": {
+      "dalle2": 0.0005921094561927021,
+      "dalle3": 0.001840018667280674,
+      "firefly": 0.6859664916992188,
+      "midjourneyV5": 0.012547744438052177,
+      "midjourneyV6": 0.8169048428535461,
+      "sdxl": 0.22662417590618134,
+      "stable_diffusion_1_5": 0.9994679093360901,
+      "coco": 0.21788060558669348
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.00020203060759398057,
+      "dalle3": 0.0006294915898791788,
+      "firefly": 0.23196262455222488,
+      "midjourneyV5": 0.004258163113588579,
+      "midjourneyV6": 0.27853735218932496,
+      "sdxl": 0.07573857286176355,
+      "stable_diffusion_1_5": 0.3335110249998479,
+      "coco": 0.07516074008577699
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.3335110249998479
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_106571.png",
+    "likelihoods": {
+      "dalle2": 0.005197956692427397,
+      "dalle3": 0.0036350730806589127,
+      "firefly": 0.0114078214392066,
+      "midjourneyV5": 0.011402949690818787,
+      "midjourneyV6": 0.6086617708206177,
+      "sdxl": 0.0004784500633832067,
+      "stable_diffusion_1_5": 0.9999916553497314,
+      "coco": 0.16395161189514032
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.0029137900027193,
+      "dalle3": 0.0020431077413509283,
+      "firefly": 0.006337649933991168,
+      "midjourneyV5": 0.006357469082407626,
+      "midjourneyV6": 0.34095606258001754,
+      "sdxl": 0.00026269869584630127,
+      "stable_diffusion_1_5": 0.5482114933868268,
+      "coco": 0.09291772857684027
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.5482114933868268
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_188602.png",
+    "likelihoods": {
+      "dalle2": 0.0008534527150914073,
+      "dalle3": 0.00026434872415848076,
+      "firefly": 0.17804944515228271,
+      "midjourneyV5": 0.00013843282067682594,
+      "midjourneyV6": 1.3197706039136392e-08,
+      "sdxl": 0.10192327946424484,
+      "stable_diffusion_1_5": 0.9999281167984009,
+      "coco": 0.24501219780655606
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.0005677732411618557,
+      "dalle3": 0.00017632959369813834,
+      "firefly": 0.11739132928977233,
+      "midjourneyV5": 9.159588927881639e-05,
+      "midjourneyV6": 8.774524925841868e-09,
+      "sdxl": 0.066414751517415,
+      "stable_diffusion_1_5": 0.6505645652408832,
+      "coco": 0.16479364645326586
+    },
+    "predicted_generator": "stable_diffusion_1_5",
+    "confidence": 0.6505645652408832
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5/image_179412.png",
+    "likelihoods": {
+      "dalle2": 0.01760059781372547,
+      "dalle3": 0.0026174793019890785,
+      "firefly": 0.9987389445304871,
+      "midjourneyV5": 0.00040091751725412905,
+      "midjourneyV6": 0.0005710002151317894,
+      "sdxl": 0.05507515370845795,
+      "stable_diffusion_1_5": 0.999996542930603,
+      "coco": 0.06318956824293698
+    },
+    "priors": {
+      "dalle2": 0.12569020541569964,
+      "dalle3": 0.12602420508004653,
+      "firefly": 0.12456653268982117,
+      "midjourneyV5": 0.1250094638352105,
+      "midjourneyV6": 0.12560248616652608,
+      "sdxl": 0.12311108061730577,
+      "stable_diffusion_1_5": 0.12292143013120659,
+      "coco": 0.1270745960641837
+    },
+    "posteriors": {
+      "dalle2": 0.008354172649109112,
+      "dalle3": 0.0012456952663667561,
+      "firefly": 0.46981616131217036,
+      "midjourneyV5": 0.00018926596218074113,
+      "midjourneyV6": 0.00027083768913778217,
+      "sdxl": 0.025605157548254653,
+      "stable_diffusion_1_5": 0.4641952521685943,
+      "coco": 0.03032345740418634
+    },
+    "predicted_generator": "firefly",
+    "confidence": 0.46981616131217036
+  }
+]

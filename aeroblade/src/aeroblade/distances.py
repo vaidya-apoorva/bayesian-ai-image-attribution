@@ -186,7 +186,7 @@ def _compute_lpips(
             retPerLayer=True,
             normalize=True,
         )
-        lpips_layers[0].append(sum_batch.to(device="cpu", dtype=torch.float16))
+        lpips_layers[0].append(sum_batch.to(device="cpu", dtype=(torch.float16 if torch.cuda.is_available() else torch.float32)))
         # Debug: Inspect the outputs from the LPIPS model
         print("Sum batch shape:", sum_batch.shape)
         print("Sum batch values:", sum_batch)
@@ -194,7 +194,7 @@ def _compute_lpips(
             print(f"Layer {i} result shape:", layer_result.shape)
             print(f"Layer {i} result values:", layer_result)
             lpips_layers[i + 1].append(
-                layer_result.to(device="cpu", dtype=torch.float16)
+                layer_result.to(device="cpu", dtype=(torch.float16 if torch.cuda.is_available() else torch.float32))
             )
 
     lpips_layers = [torch.cat(lpips_layer) for lpips_layer in lpips_layers]
@@ -265,7 +265,7 @@ class LPIPS(Distance):
                     size=self.output_size,
                     mode="bilinear",
                     antialias=True,
-                ).to(dtype=torch.float16)
+                ).to(dtype=(torch.float16 if torch.cuda.is_available() else torch.float32))
                 print(f"Resized tensor for layer {layer}:", out[layer])
 
         if (
@@ -303,7 +303,7 @@ def _compute_pyiqa_distance(
         desc=f"Computing {metric_name}",
         total=len(dl_a),
     ):
-        out_tensor = metric(tensor_a, tensor_b).to(device="cpu", dtype=torch.float16)
+        out_tensor = metric(tensor_a, tensor_b).to(device="cpu", dtype=(torch.float16 if torch.cuda.is_available() else torch.float32))
         if out_tensor.ndim == 0:
             out_tensor = out_tensor.unsqueeze(0)
         out.append(out_tensor)

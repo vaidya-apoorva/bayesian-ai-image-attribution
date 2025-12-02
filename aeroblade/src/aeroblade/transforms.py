@@ -2,7 +2,7 @@ from typing import Any, Callable, List, Sequence, Union
 
 import torch
 import torchvision.transforms.functional as F
-import torchvision.transforms.v2 as tf
+import torchvision.transforms as tf
 from PIL import Image
 from torchvision.io import decode_jpeg, encode_jpeg
 

@@ -1,0 +1,27 @@
+================================================================================
+BAYESIAN ATTRIBUTION PERFORMANCE (AI only)
+================================================================================
+
+OVERALL PERFORMANCE:
+----------------------------------------
+Total images analyzed: 1224
+Correct predictions: 900
+Overall accuracy: 73.53%
+Mean confidence: 0.3854
+Median confidence: 0.3504
+Mean confidence (correct): 0.4139
+Mean confidence (incorrect): 0.3064
+
+PER-GENERATOR PERFORMANCE (AI only):
+----------------------------------------
+Generator      Count     Accuracy    Mean Conf
+--------------------------------------------------------------------------------
+Firefly          200      39.50%      0.3428
+SD-XL            111      95.50%      0.3287
+DALL.E3          200      42.00%      0.3402
+Midj.-V6         200      68.50%      0.3795
+DALL.E2          200      98.50%      0.4181
+SD-1.5           198      94.44%      0.5053
+Midj.-V5         115      95.65%      0.3398
+
+================================================================================

@@ -1,0 +1,39 @@
+{
+  "total_images": 100,
+  "predictions_count": {
+    "coco": 36,
+    "stable_diffusion_1-5": 17,
+    "midjourneyV6": 2,
+    "sdxl": 35,
+    "firefly": 3,
+    "dall-e2": 5,
+    "midjourneyV5": 2
+  },
+  "predictions_percentage": {
+    "coco": 36.0,
+    "stable_diffusion_1-5": 17.0,
+    "midjourneyV6": 2.0,
+    "sdxl": 35.0,
+    "firefly": 3.0,
+    "dall-e2": 5.0,
+    "midjourneyV5": 2.0
+  },
+  "average_confidence": {
+    "coco": 0.6415592927634177,
+    "stable_diffusion_1-5": 0.4042568463483577,
+    "midjourneyV6": 0.3265628377638823,
+    "sdxl": 0.4220635210971903,
+    "firefly": 0.29374568085917685,
+    "dall-e2": 0.3252718033972337,
+    "midjourneyV5": 0.23245131780033237
+  },
+  "confidence_std": {
+    "coco": 0.176718110535863,
+    "stable_diffusion_1-5": 0.0706402117318026,
+    "midjourneyV6": 0.05723861587718934,
+    "sdxl": 0.1009257496069664,
+    "firefly": 0.04172853975067497,
+    "dall-e2": 0.06351265328494028,
+    "midjourneyV5": 0.029108783370344143
+  }
+}

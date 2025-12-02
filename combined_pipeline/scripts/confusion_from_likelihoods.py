@@ -161,7 +161,7 @@ def compute_and_save(y_true, y_pred, out_dir: Path, prefix: str):
     # Plot raw confusion matrix
     fig, ax = plt.subplots(figsize=(9,8))
     im = ax.imshow(cm, interpolation='nearest', cmap='Blues')
-    ax.set_title(f"{prefix} confusion matrix (counts)  acc={acc:.2f}%")
+    ax.set_title(f"confusion matrix (counts)  acc={acc:.2f}%")
     ax.set_xticks(np.arange(len(labels))); ax.set_yticks(np.arange(len(labels)))
     ax.set_xticklabels([CANON_TO_DISPLAY.get(l,l) for l in labels], rotation=45, ha='right')
     ax.set_yticklabels([CANON_TO_DISPLAY.get(l,l) for l in labels])
@@ -179,7 +179,7 @@ def compute_and_save(y_true, y_pred, out_dir: Path, prefix: str):
     # Plot normalized confusion matrix
     fig, ax = plt.subplots(figsize=(9,8))
     im = ax.imshow(cm_norm, interpolation='nearest', cmap='Blues', vmin=0, vmax=1)
-    ax.set_title(f"{prefix} confusion matrix (row-normalized)")
+    ax.set_title(f"confusion matrix (row-normalized) acc={acc:.2f}%")
     ax.set_xticks(np.arange(len(labels))); ax.set_yticks(np.arange(len(labels)))
     ax.set_xticklabels([CANON_TO_DISPLAY.get(l,l) for l in labels], rotation=45, ha='right')
     ax.set_yticklabels([CANON_TO_DISPLAY.get(l,l) for l in labels])

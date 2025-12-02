@@ -1,0 +1,31 @@
+{
+  "total_images": 100,
+  "predictions_count": {
+    "dall-e3": 91,
+    "midjourneyV5": 5,
+    "midjourneyV6": 2,
+    "coco": 1,
+    "dall-e2": 1
+  },
+  "predictions_percentage": {
+    "dall-e3": 91.0,
+    "midjourneyV5": 5.0,
+    "midjourneyV6": 2.0,
+    "coco": 1.0,
+    "dall-e2": 1.0
+  },
+  "average_confidence": {
+    "dall-e3": 0.6573832466363639,
+    "midjourneyV5": 0.4526989580361226,
+    "midjourneyV6": 0.478277930052446,
+    "coco": 0.5982672597676608,
+    "dall-e2": 0.37102817700968804
+  },
+  "confidence_std": {
+    "dall-e3": 0.11025803467906264,
+    "midjourneyV5": 0.0549655967250792,
+    "midjourneyV6": 0.012352690919750553,
+    "coco": 0.0,
+    "dall-e2": 0.0
+  }
+}

@@ -1,0 +1,50 @@
+[
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/rotate000000160402.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.9999233484268188,
+    "class_1_prob": 7.664192526135594e-05,
+    "predicted_class": 0,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/rotate000000527345.jpg",
+    "true_label": "Real",
+    "class_0_prob": 1.0,
+    "class_1_prob": 4.042142454085962e-10,
+    "predicted_class": 0,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/000000424712.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.9994720816612244,
+    "class_1_prob": 0.0005279442411847413,
+    "predicted_class": 0,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_family_playing_a_game_of_frisbee_on_a_wet_sandy_beac_b004744b-c9ba-4248-bbfd-c7a7a6780bd6_3.png",
+    "true_label": "AI",
+    "class_0_prob": 0.004979613237082958,
+    "class_1_prob": 0.9950203895568848,
+    "predicted_class": 1,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_man_rides_to_the_top_of_a_skateboard_ramp_photograph_582231e1-6b53-45f8-a8a7-563fd6b6b13b_4.png",
+    "true_label": "AI",
+    "class_0_prob": 0.004548175260424614,
+    "class_1_prob": 0.9954518675804138,
+    "predicted_class": 1,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_man_in_a_purple_shirt_and_matching_tie_looking_pensi_aecf2f85-7ecc-4637-940f-ad4ea9df8dc0_3.png",
+    "true_label": "AI",
+    "class_0_prob": 0.006953465286642313,
+    "class_1_prob": 0.9930465817451477,
+    "predicted_class": 1,
+    "correct": false
+  }
+]

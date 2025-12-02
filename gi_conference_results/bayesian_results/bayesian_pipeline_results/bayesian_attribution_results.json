@@ -1,0 +1,352 @@
+[
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img360.png",
+    "likelihoods": {
+      "dall-e2": 0.9292065501213074,
+      "dall-e3": 0.9820828437805176,
+      "firefly": 0.9760428667068481,
+      "midjourneyV5": 0.9983385801315308,
+      "midjourneyV6": 0.9999352693557739,
+      "sdxl": 0.9913284182548523,
+      "stable_diffusion_1-5": 0.8428528308868408,
+      "coco": 0.00890929949485252
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.10353120421164104,
+      "dall-e3": 0.27927788753600585,
+      "firefly": 0.010283335605286088,
+      "midjourneyV5": 0.12304676731477841,
+      "midjourneyV6": 0.1478209913600126,
+      "sdxl": 0.10292558279717644,
+      "stable_diffusion_1-5": 0.2330203650962122,
+      "coco": 9.386607888737395e-05
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.27927788753600585
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img827.png",
+    "likelihoods": {
+      "dall-e2": 0.9755202531814575,
+      "dall-e3": 0.9057039022445679,
+      "firefly": 0.9992565512657166,
+      "midjourneyV5": 0.9982579350471497,
+      "midjourneyV6": 0.9973903298377991,
+      "sdxl": 0.9992374181747437,
+      "stable_diffusion_1-5": 0.42844775319099426,
+      "coco": 0.008571843457981707
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.12499774479311755,
+      "dall-e3": 0.29619760979889503,
+      "firefly": 0.012107347464065792,
+      "midjourneyV5": 0.14149529834038074,
+      "midjourneyV6": 0.16956501828207915,
+      "sdxl": 0.11931123781007834,
+      "stable_diffusion_1-5": 0.13622188401000312,
+      "coco": 0.0001038595013802117
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.29619760979889503
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img495.png",
+    "likelihoods": {
+      "dall-e2": 0.9916542768478394,
+      "dall-e3": 0.6236941814422607,
+      "firefly": 0.5095067620277405,
+      "midjourneyV5": 0.6309857964515686,
+      "midjourneyV6": 0.7216715812683105,
+      "sdxl": 0.9295548796653748,
+      "stable_diffusion_1-5": 0.4576942026615143,
+      "coco": 0.17967007433487683
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.1572538746710437,
+      "dall-e3": 0.25243070593616906,
+      "firefly": 0.007640066396999507,
+      "midjourneyV5": 0.11068633313086745,
+      "midjourneyV6": 0.15183989334768544,
+      "sdxl": 0.13736082054716595,
+      "stable_diffusion_1-5": 0.18009414879732746,
+      "coco": 0.0026941571727413217
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.25243070593616906
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img611.png",
+    "likelihoods": {
+      "dall-e2": 0.996821403503418,
+      "dall-e3": 0.9376360774040222,
+      "firefly": 0.0011471639154478908,
+      "midjourneyV5": 0.7844323515892029,
+      "midjourneyV6": 0.6203131079673767,
+      "sdxl": 0.06340890377759933,
+      "stable_diffusion_1-5": 0.07604819536209106,
+      "coco": 0.20262669502757638
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.18639968706131504,
+      "dall-e3": 0.4474984725745452,
+      "firefly": 2.0284271613019088e-05,
+      "midjourneyV5": 0.1622619429480637,
+      "midjourneyV6": 0.15390190782021343,
+      "sdxl": 0.011049047615936454,
+      "stable_diffusion_1-5": 0.03528579142470938,
+      "coco": 0.003582866283603794
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.4474984725745452
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img416.png",
+    "likelihoods": {
+      "dall-e2": 0.9949215054512024,
+      "dall-e3": 0.9910898208618164,
+      "firefly": 0.9545446634292603,
+      "midjourneyV5": 0.9932767152786255,
+      "midjourneyV6": 0.9807042479515076,
+      "sdxl": 0.9644646644592285,
+      "stable_diffusion_1-5": 0.02224174700677395,
+      "coco": 0.02653861545754177
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.1427203825716206,
+      "dall-e3": 0.3628604393402036,
+      "firefly": 0.012947906412852105,
+      "midjourneyV5": 0.15761617668714636,
+      "midjourneyV6": 0.18665535756606075,
+      "sdxl": 0.12892296332384545,
+      "stable_diffusion_1-5": 0.007916791456863,
+      "coco": 0.00035998264140834935
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.3628604393402036
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img690.png",
+    "likelihoods": {
+      "dall-e2": 0.9986771941184998,
+      "dall-e3": 0.9879016876220703,
+      "firefly": 0.00020002605742774904,
+      "midjourneyV5": 0.5102750062942505,
+      "midjourneyV6": 0.9999109506607056,
+      "sdxl": 0.04654980078339577,
+      "stable_diffusion_1-5": 0.010621016845107079,
+      "coco": 0.048786023855302285
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.18205445436316478,
+      "dall-e3": 0.4596416001026991,
+      "firefly": 3.448012796606448e-06,
+      "midjourneyV5": 0.10289963273755293,
+      "midjourneyV6": 0.24184812363345076,
+      "sdxl": 0.0079075287450162,
+      "stable_diffusion_1-5": 0.0048042478036356305,
+      "coco": 0.0008409646016838267
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.4596416001026991
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img46.png",
+    "likelihoods": {
+      "dall-e2": 0.9709168672561646,
+      "dall-e3": 0.8962010145187378,
+      "firefly": 0.9177761673927307,
+      "midjourneyV5": 0.5882170796394348,
+      "midjourneyV6": 0.13764680922031403,
+      "sdxl": 0.9779983758926392,
+      "stable_diffusion_1-5": 0.9999083280563354,
+      "coco": 0.040471805957506685
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.12817978068212943,
+      "dall-e3": 0.30197593384729743,
+      "firefly": 0.011457249454203998,
+      "midjourneyV5": 0.08590302549105523,
+      "midjourneyV6": 0.02411064604211517,
+      "sdxl": 0.12031572363360346,
+      "stable_diffusion_1-5": 0.3275524026518705,
+      "coco": 0.0005052381977247654
+    },
+    "predicted_generator": "stable_diffusion_1-5",
+    "confidence": 0.3275524026518705
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img604.png",
+    "likelihoods": {
+      "dall-e2": 0.8391589522361755,
+      "dall-e3": 0.9999878406524658,
+      "firefly": 0.9665007591247559,
+      "midjourneyV5": 0.9974756836891174,
+      "midjourneyV6": 0.34552088379859924,
+      "sdxl": 0.9987127780914307,
+      "stable_diffusion_1-5": 0.9964451193809509,
+      "coco": 0.006507411966317997
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.09932733820518011,
+      "dall-e3": 0.30209859680199846,
+      "firefly": 0.01081764884587112,
+      "midjourneyV5": 0.13060512934072804,
+      "midjourneyV6": 0.0542630358900992,
+      "sdxl": 0.11015696133014731,
+      "stable_diffusion_1-5": 0.2926584547776292,
+      "coco": 7.283480834670087e-05
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.30209859680199846
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img395.png",
+    "likelihoods": {
+      "dall-e2": 0.9951812624931335,
+      "dall-e3": 0.9660270810127258,
+      "firefly": 0.5717944502830505,
+      "midjourneyV5": 0.975399911403656,
+      "midjourneyV6": 0.9759649634361267,
+      "sdxl": 0.9763230681419373,
+      "stable_diffusion_1-5": 0.2811659574508667,
+      "coco": 0.049276004036637344
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.1326760613918267,
+      "dall-e3": 0.3287071153031077,
+      "firefly": 0.007208359383546148,
+      "midjourneyV5": 0.14384886614080936,
+      "midjourneyV6": 0.1726353890720603,
+      "sdxl": 0.12129159485181384,
+      "stable_diffusion_1-5": 0.09301141309857057,
+      "coco": 0.0006212007582653327
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.3287071153031077
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dall-e2/img969.png",
+    "likelihoods": {
+      "dall-e2": 0.9551116228103638,
+      "dall-e3": 0.996283233165741,
+      "firefly": 0.9995431900024414,
+      "midjourneyV5": 0.38181981444358826,
+      "midjourneyV6": 0.9679501056671143,
+      "sdxl": 0.9105137586593628,
+      "stable_diffusion_1-5": 0.6422992944717407,
+      "coco": 0.03359897885294346
+    },
+    "priors": {
+      "coco": 0.009862731329620237,
+      "dall-e2": 0.10430162816182632,
+      "dall-e3": 0.2662076376138461,
+      "firefly": 0.009862731329620237,
+      "midjourneyV5": 0.11537838054050369,
+      "midjourneyV6": 0.1383873230776372,
+      "sdxl": 0.0971936436514326,
+      "stable_diffusion_1-5": 0.2588059242955137
+    },
+    "posteriors": {
+      "dall-e2": 0.12332829174819321,
+      "dall-e3": 0.32833775998409365,
+      "firefly": 0.012204395284318673,
+      "midjourneyV5": 0.05453814964243089,
+      "midjourneyV6": 0.1658314042049159,
+      "sdxl": 0.1095574396722796,
+      "stable_diffusion_1-5": 0.20579231684175453,
+      "coco": 0.0004102426220137406
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.32833775998409365
+  }
+]

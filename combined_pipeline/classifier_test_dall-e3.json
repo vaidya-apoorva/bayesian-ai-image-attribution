@@ -1,0 +1,26 @@
+[
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/rotate000000160402.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.9999997615814209,
+    "class_1_prob": 2.7332887952979945e-07,
+    "predicted_class": 0,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/rotate000000527345.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.9999997615814209,
+    "class_1_prob": 1.8938193591111485e-07,
+    "predicted_class": 0,
+    "correct": false
+  },
+  {
+    "image": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco/000000424712.jpg",
+    "true_label": "Real",
+    "class_0_prob": 0.7617083787918091,
+    "class_1_prob": 0.2382916510105133,
+    "predicted_class": 0,
+    "correct": false
+  }
+]
