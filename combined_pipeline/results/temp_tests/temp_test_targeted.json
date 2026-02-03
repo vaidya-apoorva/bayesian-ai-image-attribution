@@ -1,0 +1,702 @@
+[
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_family_playing_a_game_of_frisbee_on_a_wet_sandy_beac_b004744b-c9ba-4248-bbfd-c7a7a6780bd6_3.png",
+    "likelihoods": {
+      "dall-e2": 0.0017169807106256485,
+      "dall-e3": 0.676540732383728,
+      "firefly": 0.0012430221540853381,
+      "midjourneyV5": 0.9950203895568848,
+      "midjourneyV6": 0.9998775720596313,
+      "sdxl": 0.1318640261888504,
+      "stable_diffusion_1-5": 0.438198447227478,
+      "coco": 0.09940578977366209
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.0005280933640838361,
+      "dall-e3": 0.20758954884803665,
+      "firefly": 0.00038099197602546153,
+      "midjourneyV5": 0.30481474872584285,
+      "midjourneyV6": 0.3065594732737386,
+      "sdxl": 0.040321384686758444,
+      "stable_diffusion_1-5": 0.13394260587351017,
+      "coco": 0.005863153252003966
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.3065594732737386
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_man_rides_to_the_top_of_a_skateboard_ramp_photograph_582231e1-6b53-45f8-a8a7-563fd6b6b13b_4.png",
+    "likelihoods": {
+      "dall-e2": 0.2965783178806305,
+      "dall-e3": 1.2408345639869367e-07,
+      "firefly": 0.07374315708875656,
+      "midjourneyV5": 0.9954518675804138,
+      "midjourneyV6": 0.08311038464307785,
+      "sdxl": 0.008210551925003529,
+      "stable_diffusion_1-5": 0.9805707335472107,
+      "coco": 0.2445823971612221
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.11988064185779256,
+      "dall-e3": 5.003723306666966e-08,
+      "firefly": 0.02970455526375643,
+      "midjourneyV5": 0.4007639333600852,
+      "midjourneyV6": 0.03348787381419669,
+      "sdxl": 0.003299482475943032,
+      "stable_diffusion_1-5": 0.39390473801520587,
+      "coco": 0.01895872517578719
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.4007639333600852
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_man_in_a_purple_shirt_and_matching_tie_looking_pensi_aecf2f85-7ecc-4637-940f-ad4ea9df8dc0_3.png",
+    "likelihoods": {
+      "dall-e2": 0.011072208173573017,
+      "dall-e3": 0.07067319750785828,
+      "firefly": 0.573939859867096,
+      "midjourneyV5": 0.9930465817451477,
+      "midjourneyV6": 0.9857229590415955,
+      "sdxl": 0.814032793045044,
+      "stable_diffusion_1-5": 0.0976298376917839,
+      "coco": 0.18163903814560886
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.0031046308251546644,
+      "dall-e3": 0.019769546423260044,
+      "firefly": 0.1603739314935788,
+      "midjourneyV5": 0.2773345942888031,
+      "midjourneyV6": 0.275520054068746,
+      "sdxl": 0.22692452517105413,
+      "stable_diffusion_1-5": 0.027205762700856596,
+      "coco": 0.009766955028546824
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.2773345942888031
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_large_brown_and_black_dog_laying_on_the_back_of_a_bo_18810ab5-dba7-4a84-b07d-2d9bd34fb068_2.png",
+    "likelihoods": {
+      "dall-e2": 0.18948812782764435,
+      "dall-e3": 0.9999622106552124,
+      "firefly": 0.22065795958042145,
+      "midjourneyV5": 0.99985671043396,
+      "midjourneyV6": 0.9999659061431885,
+      "sdxl": 0.21508638560771942,
+      "stable_diffusion_1-5": 0.05806364491581917,
+      "coco": 0.013603066662969135
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.0515786872723003,
+      "dall-e3": 0.27154268610735577,
+      "firefly": 0.0598548771401024,
+      "midjourneyV5": 0.2710720550518932,
+      "midjourneyV6": 0.2713289243559931,
+      "sdxl": 0.05820563258268012,
+      "stable_diffusion_1-5": 0.01570707041006988,
+      "coco": 0.0007100670796051448
+    },
+    "predicted_generator": "dall-e3",
+    "confidence": 0.27154268610735577
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_line_of_skiers_waiting_for_the_ski_lift_photography_e863d1bf-9c06-4d90-93bf-ecb9b3b7571e_2.png",
+    "likelihoods": {
+      "dall-e2": 0.06572241336107254,
+      "dall-e3": 0.0002470419858582318,
+      "firefly": 0.5026259422302246,
+      "midjourneyV5": 0.9776479005813599,
+      "midjourneyV6": 0.6375799179077148,
+      "sdxl": 0.03701763227581978,
+      "stable_diffusion_1-5": 0.14396660029888153,
+      "coco": 0.4381977548916306
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.026934771561709328,
+      "dall-e3": 0.00010100358933534701,
+      "firefly": 0.20527514149931989,
+      "midjourneyV5": 0.39906254577960715,
+      "midjourneyV6": 0.2604696004238792,
+      "sdxl": 0.015082462114100009,
+      "stable_diffusion_1-5": 0.058635976063373486,
+      "coco": 0.03443849896867565
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.39906254577960715
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_man_flying_through_the_air_while_riding_skis_photogr_e11751ff-6247-481d-82dd-9ce0b9625b5f_3.png",
+    "likelihoods": {
+      "dall-e2": 0.0002772215520963073,
+      "dall-e3": 0.023756014183163643,
+      "firefly": 0.0013236834201961756,
+      "midjourneyV5": 0.9999808073043823,
+      "midjourneyV6": 0.9954916834831238,
+      "sdxl": 0.0005528455367311835,
+      "stable_diffusion_1-5": 0.0011840019142255187,
+      "coco": 0.09760160832722549
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.00013628990877455989,
+      "dall-e3": 0.011651357458332937,
+      "firefly": 0.0006485037682279977,
+      "midjourneyV5": 0.4896514850245011,
+      "midjourneyV6": 0.4878619699661426,
+      "sdxl": 0.00027021181167385185,
+      "stable_diffusion_1-5": 0.000578484503112813,
+      "coco": 0.009201697559234135
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.4896514850245011
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_parking_meter_at_the_edge_of_the_ocean_with_a_boat_b_183b9ef4-34e7-458e-b56b-88997ba5baaa_1.png",
+    "likelihoods": {
+      "dall-e2": 0.022273242473602295,
+      "dall-e3": 0.20106585323810577,
+      "firefly": 0.02868676744401455,
+      "midjourneyV5": 0.9721006155014038,
+      "midjourneyV6": 0.9404840469360352,
+      "sdxl": 0.0034488230012357235,
+      "stable_diffusion_1-5": 0.009767130017280579,
+      "coco": 0.3845353489169892
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.00992550240846783,
+      "dall-e3": 0.08938684675665606,
+      "firefly": 0.012739205187852484,
+      "midjourneyV5": 0.4314584460630408,
+      "midjourneyV6": 0.41777563464931433,
+      "sdxl": 0.001527931106722214,
+      "stable_diffusion_1-5": 0.004325523131989928,
+      "coco": 0.032860910695956334
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.4314584460630408
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_a_close_up_of_a_fork_holding_some_cooked_broccoly_phot_d0296c32-4aab-4ea2-bfee-df83b49f5fbf_1.png",
+    "likelihoods": {
+      "dall-e2": 0.031057432293891907,
+      "dall-e3": 0.28349241614341736,
+      "firefly": 0.00144201482180506,
+      "midjourneyV5": 0.942794144153595,
+      "midjourneyV6": 0.9988597631454468,
+      "sdxl": 0.1872224509716034,
+      "stable_diffusion_1-5": 0.009771806187927723,
+      "coco": 0.2321990620521321
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.012470845602046976,
+      "dall-e3": 0.11356331005878868,
+      "firefly": 0.0005770211683618034,
+      "midjourneyV5": 0.377056068075199,
+      "midjourneyV6": 0.3998135369846055,
+      "sdxl": 0.07473982795141162,
+      "stable_diffusion_1-5": 0.0038994900428845542,
+      "coco": 0.01787990011670194
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.3998135369846055
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_a_brown_bear_is_walking_away_from_a_rive_photography_ea95d02d-fd39-4403-874c-7c0b937c12fc_4.png",
+    "likelihoods": {
+      "dall-e2": 0.02613922208547592,
+      "dall-e3": 0.6545318365097046,
+      "firefly": 7.240771992655937e-06,
+      "midjourneyV5": 0.9996042847633362,
+      "midjourneyV6": 0.9864158034324646,
+      "sdxl": 0.001070888713002205,
+      "stable_diffusion_1-5": 0.005068741738796234,
+      "coco": 0.15109354221029578
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.009706013274873863,
+      "dall-e3": 0.24246286901474556,
+      "firefly": 2.6793214455972756e-06,
+      "midjourneyV5": 0.3696877279692921,
+      "midjourneyV6": 0.3651159993780207,
+      "sdxl": 0.00039532690832488844,
+      "stable_diffusion_1-5": 0.0018704710975233016,
+      "coco": 0.010758913035774044
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.3696877279692921
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_person_riding_on_the_back_of_a_horse_walking_across__dc40d40f-c02e-46b3-9b23-59b8573d28c2_3.png",
+    "likelihoods": {
+      "dall-e2": 0.04560677707195282,
+      "dall-e3": 0.13925638794898987,
+      "firefly": 0.02446623332798481,
+      "midjourneyV5": 0.9999994039535522,
+      "midjourneyV6": 0.999994158744812,
+      "sdxl": 0.00016488501569256186,
+      "stable_diffusion_1-5": 0.06891534477472305,
+      "coco": 0.021812649754378136
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.020050684014429117,
+      "dall-e3": 0.061077489576492255,
+      "firefly": 0.010719106582666416,
+      "midjourneyV5": 0.4378831705986984,
+      "midjourneyV6": 0.4382479503723488,
+      "sdxl": 7.206838912765122e-05,
+      "stable_diffusion_1-5": 0.030110527168247834,
+      "coco": 0.0018390032979892848
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.4382479503723488
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_bunch_of_bananas_on_a_wooden_bench_with_hammocks_in__93596c3c-d900-4271-9c65-95965cb8732d_3.png",
+    "likelihoods": {
+      "dall-e2": 0.03679446876049042,
+      "dall-e3": 0.23315130174160004,
+      "firefly": 0.19096878170967102,
+      "midjourneyV5": 0.9983476400375366,
+      "midjourneyV6": 0.9855939745903015,
+      "sdxl": 0.35689759254455566,
+      "stable_diffusion_1-5": 0.03909042850136757,
+      "coco": 0.18954605196827876
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.012835844368701691,
+      "dall-e3": 0.08114205310623106,
+      "firefly": 0.0663889728192504,
+      "midjourneyV5": 0.34688251093980615,
+      "midjourneyV6": 0.3427382428827521,
+      "sdxl": 0.12377967451331275,
+      "stable_diffusion_1-5": 0.013552360720303209,
+      "coco": 0.012680340649642543
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.34688251093980615
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_black_and_white_photo_shows_men_in_a_field_with_a_tr_367ced3c-e005-47a5-ba90-a6b6a4bf23ef_1.png",
+    "likelihoods": {
+      "dall-e2": 0.09408099204301834,
+      "dall-e3": 0.05172659084200859,
+      "firefly": 0.4663902819156647,
+      "midjourneyV5": 0.8071854114532471,
+      "midjourneyV6": 0.9871119856834412,
+      "sdxl": 0.0005823674728162587,
+      "stable_diffusion_1-5": 0.08591709285974503,
+      "coco": 0.37488704967654385
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.036804231019970074,
+      "dall-e3": 0.020187194065040073,
+      "firefly": 0.18181805951063224,
+      "midjourneyV5": 0.31450522635004724,
+      "midjourneyV6": 0.3849327882037777,
+      "sdxl": 0.00022649404237285622,
+      "stable_diffusion_1-5": 0.03340242897665189,
+      "coco": 0.028123577831507856
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.3849327882037777
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_a_group_of_bananas_are_resting_on_a_stand_photography_42c83d26-264e-4925-9511-62ef28e0ced2_4.png",
+    "likelihoods": {
+      "dall-e2": 0.0010557153727859259,
+      "dall-e3": 0.33475229144096375,
+      "firefly": 0.00539662130177021,
+      "midjourneyV5": 0.9999420642852783,
+      "midjourneyV6": 0.9696077704429626,
+      "sdxl": 0.30686700344085693,
+      "stable_diffusion_1-5": 0.00013460818445309997,
+      "coco": 0.13472988216360715
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.00040081541120482513,
+      "dall-e3": 0.1267906902394435,
+      "firefly": 0.002041790481920758,
+      "midjourneyV5": 0.3781212688216387,
+      "midjourneyV6": 0.3669579266082871,
+      "sdxl": 0.11582747000849074,
+      "stable_diffusion_1-5": 5.078923264985745e-05,
+      "coco": 0.00980924919636456
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.3781212688216387
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_a_brown_bear_is_walking_away_from_a_rive_photography_ea95d02d-fd39-4403-874c-7c0b937c12fc_3.png",
+    "likelihoods": {
+      "dall-e2": 0.011920861899852753,
+      "dall-e3": 0.6583345532417297,
+      "firefly": 0.0012869015336036682,
+      "midjourneyV5": 0.9988399147987366,
+      "midjourneyV6": 0.9999644756317139,
+      "sdxl": 0.004324084147810936,
+      "stable_diffusion_1-5": 0.0050289081409573555,
+      "coco": 0.07534144553999561
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.004439206796308139,
+      "dall-e3": 0.24457418319616167,
+      "firefly": 0.0004775674346232803,
+      "midjourneyV5": 0.3704693740503302,
+      "midjourneyV6": 0.37119738826936666,
+      "sdxl": 0.0016008685359971023,
+      "stable_diffusion_1-5": 0.001861118552872608,
+      "coco": 0.005380293164340193
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.37119738826936666
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_baseball_player_sliding_into_home_plate_in_a_game_ph_40c84d23-cd2e-4131-a840-085c998e9cd1_4.png",
+    "likelihoods": {
+      "dall-e2": 0.0006855886313132942,
+      "dall-e3": 0.8677772283554077,
+      "firefly": 0.1208907812833786,
+      "midjourneyV5": 0.9998109936714172,
+      "midjourneyV6": 0.9886103272438049,
+      "sdxl": 0.0011345266830176115,
+      "stable_diffusion_1-5": 0.006219364702701569,
+      "coco": 0.11386724452392087
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.00022873492603860124,
+      "dall-e3": 0.2888307091064739,
+      "firefly": 0.04019330561598099,
+      "midjourneyV5": 0.33223507916643,
+      "midjourneyV6": 0.3287885147158265,
+      "sdxl": 0.00037631142346438107,
+      "stable_diffusion_1-5": 0.002062137003661694,
+      "coco": 0.007285208042123825
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.33223507916643
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_cooler_attached_to_a_sled_near_some_skiers_photograp_8df8b5e1-95a1-464f-b44b-c46bdef06f76_1.png",
+    "likelihoods": {
+      "dall-e2": 0.014034590683877468,
+      "dall-e3": 0.003024276113137603,
+      "firefly": 0.05350298061966896,
+      "midjourneyV5": 0.9994292855262756,
+      "midjourneyV6": 0.9552901387214661,
+      "sdxl": 0.0020793562289327383,
+      "stable_diffusion_1-5": 0.0004200408875476569,
+      "coco": 0.2183699738113352
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.006804896303754989,
+      "dall-e3": 0.0014628824907556997,
+      "firefly": 0.025851836672097107,
+      "midjourneyV5": 0.48265024880501045,
+      "midjourneyV6": 0.461721050941736,
+      "sdxl": 0.0010023386351982854,
+      "stable_diffusion_1-5": 0.00020240253372344127,
+      "coco": 0.02030434361772417
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.48265024880501045
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_large_brown_and_black_dog_laying_on_the_back_of_a_bo_18810ab5-dba7-4a84-b07d-2d9bd34fb068_1.png",
+    "likelihoods": {
+      "dall-e2": 0.4042340815067291,
+      "dall-e3": 0.9975595474243164,
+      "firefly": 0.37683719396591187,
+      "midjourneyV5": 0.9997237324714661,
+      "midjourneyV6": 0.9999760389328003,
+      "sdxl": 0.005460905842483044,
+      "stable_diffusion_1-5": 0.016025898978114128,
+      "coco": 0.02486699049635864
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.10655657130439634,
+      "dall-e3": 0.2623326717905077,
+      "firefly": 0.09899032228103333,
+      "midjourneyV5": 0.26247383437287686,
+      "midjourneyV6": 0.2627601644797603,
+      "sdxl": 0.0014311192111256987,
+      "stable_diffusion_1-5": 0.004198288966172981,
+      "coco": 0.0012570275941268122
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.2627601644797603
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_group_of_elephants_that_are_walking_together._photog_921d6850-69f5-4997-9c7a-36300808b004_3.png",
+    "likelihoods": {
+      "dall-e2": 0.019786369055509567,
+      "dall-e3": 0.0809403583407402,
+      "firefly": 0.001056961715221405,
+      "midjourneyV5": 0.9822453260421753,
+      "midjourneyV6": 0.9999942779541016,
+      "sdxl": 0.002502165734767914,
+      "stable_diffusion_1-5": 0.05300195887684822,
+      "coco": 0.09791786842090794
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.009200099175804045,
+      "dall-e3": 0.03754548929249556,
+      "firefly": 0.0004897532501883804,
+      "midjourneyV5": 0.45488862547546793,
+      "midjourneyV6": 0.46349658535517096,
+      "sdxl": 0.0011566615222372869,
+      "stable_diffusion_1-5": 0.024491813306093072,
+      "coco": 0.008730972622542866
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.46349658535517096
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_A_cooler_attached_to_a_sled_near_some_skiers_photograp_8df8b5e1-95a1-464f-b44b-c46bdef06f76_3.png",
+    "likelihoods": {
+      "dall-e2": 0.04422677308320999,
+      "dall-e3": 0.00046000367728993297,
+      "firefly": 0.21297603845596313,
+      "midjourneyV5": 0.9784384965896606,
+      "midjourneyV6": 0.9601717591285706,
+      "sdxl": 0.0006679118960164487,
+      "stable_diffusion_1-5": 0.00029161403654143214,
+      "coco": 0.3501291494419754
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.019598201254213327,
+      "dall-e3": 0.00020335670967746696,
+      "firefly": 0.09404882421909842,
+      "midjourneyV5": 0.4318403253716064,
+      "midjourneyV6": 0.42413343378002005,
+      "sdxl": 0.0002942482925698977,
+      "stable_diffusion_1-5": 0.00012842276071064343,
+      "coco": 0.029753187612103736
+    },
+    "predicted_generator": "midjourneyV5",
+    "confidence": 0.4318403253716064
+  },
+  {
+    "image_path": "/mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5/i1_mmsec_a_man_holding_onto_some_wires_while_skiing_photography_16d84752-56aa-4e47-aa6d-f3b1153e337c_2.png",
+    "likelihoods": {
+      "dall-e2": 0.001479830709286034,
+      "dall-e3": 0.03397802263498306,
+      "firefly": 1.883134973468259e-05,
+      "midjourneyV5": 0.785812497138977,
+      "midjourneyV6": 0.9969819188117981,
+      "sdxl": 8.607133850091486e-08,
+      "stable_diffusion_1-5": 4.955904387315968e-06,
+      "coco": 0.3484354232728447
+    },
+    "priors": {
+      "dall-e2": 0.13953345202714493,
+      "dall-e3": 0.13920171331031178,
+      "firefly": 0.13904968348932678,
+      "midjourneyV5": 0.13897511480929114,
+      "midjourneyV6": 0.13909161797403122,
+      "sdxl": 0.13872098083704712,
+      "stable_diffusion_1-5": 0.13866950155066518,
+      "coco": 0.02675793600218192
+    },
+    "posteriors": {
+      "dall-e2": 0.0007876834774449209,
+      "dall-e3": 0.018042804491538347,
+      "firefly": 9.98878897099436e-06,
+      "midjourneyV5": 0.4165981471211727,
+      "midjourneyV6": 0.5289926067444881,
+      "sdxl": 4.554776953956554e-08,
+      "stable_diffusion_1-5": 2.621593323937205e-06,
+      "coco": 0.03556610223529151
+    },
+    "predicted_generator": "midjourneyV6",
+    "confidence": 0.5289926067444881
+  }
+]
