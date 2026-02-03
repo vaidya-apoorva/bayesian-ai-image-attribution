@@ -42,13 +42,13 @@ gi_conference_code/
 │   └── src/aeroblade/           # Core AEROBLADE modules
 │
 ├── SReC/                          # Super-Resolution Compression
-│   ├── srec_detector.py          # Main SReC detection script
+│   ├── srec_detector.py          # Main SReC detection script (called via srec_runner.py)
 │   ├── zero_shot_detector.py     # Legacy detection interface
 │   ├── src/                      # SReC core implementation
 │   ├── models/                   # Pre-trained compression models
 │   │   ├── openimages.pth       # Open Images model (2.70 bpsp)
 │   │   └── imagenet64.pth       # ImageNet64 model (4.29 bpsp)
-│   ├── scripts/                  # Utility and analysis scripts
+│   ├── scripts/                  # Utility scripts (not directly used by combined_pipeline)
 │   └── datasets/                 # Training and evaluation file lists
 │
 ├── RIGID/                         # Training-free detection via noise robustness
@@ -188,7 +188,8 @@ The combined pipeline provides unified runners for each detection method that ha
 
 #### 1. Run SReC Detection
 
-Process multiple datasets through SReC to compute D(l) compression scores:
+Process multiple datasets through SReC to compute D(l) compression scores.
+**Note**: `srec_runner.py` calls `SReC/srec_detector.py` as a subprocess:
 
 ```bash
 python /path/to/combined_pipeline/scripts/srec_runner.py \
@@ -328,24 +329,25 @@ This script tests all trained ResNet classifiers on all datasets to generate P(G
 
 #### 5. Bayesian Attribution
 
-Combine all detector outputs to compute final Bayesian posteriors:
+Combine all detector outputs to compute final Bayesian posteriors.
+**Note**: Uses Bayesian scripts from `combined_pipeline/scripts/BAYESIAN_SCRIPTS/`, not `SReC/scripts/`:
 
 ```bash
 # Using SReC priors
-python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution.py \
+python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_srec_weights.py \
     --batch \
     --input-dir /path/to/test/images \
     --method srec \
     --model openimages
 
 # Using RIGID priors
-python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution.py \
+python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_srec_weights.py \
     --batch \
     --input-dir /path/to/test/images \
     --method rigid
 
 # Using AEROBLADE priors
-python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution.py \
+python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_srec_weights.py \
     --batch \
     --input-dir /path/to/test/images \
     --method aeroblade
@@ -372,6 +374,20 @@ python /path/to/combined_pipeline/scripts/compare_priors.py
 ```
 
 This script runs Bayesian attribution with SReC, RIGID, and AEROBLADE priors and generates comparative analysis.
+
+### Architecture Notes
+
+**SReC Integration**: 
+- `combined_pipeline/scripts/srec_runner.py` is the entry point
+- It internally calls `SReC/srec_detector.py` as a subprocess
+- **`SReC/scripts/` is NOT directly used by combined_pipeline** (it contains legacy utilities)
+- Results are saved to `combined_pipeline/results/SREC/`
+
+**Bayesian Attribution**:
+- Located in: `combined_pipeline/scripts/BAYESIAN_SCRIPTS/`
+- Main script: `bayesian_attribution_srec_weights.py`
+- **NOT in `SReC/scripts/bayesian_generator_attribution.py`** (legacy reference - do not use)
+- Loads detector outputs from: AEROBLADE, SReC, and RIGID result directories
 
 ## Output Format
 
