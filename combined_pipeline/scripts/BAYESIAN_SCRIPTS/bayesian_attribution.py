@@ -16,15 +16,11 @@ import json
 import numpy as np
 import torch
 import torch.nn as nn
-from torch.utils.data import DataLoader
 from torchvision import transforms, models
 from pathlib import Path
 import argparse
 import logging
 from PIL import Image
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
 import traceback
 
 # Configure logging
@@ -99,6 +95,9 @@ class BayesianAttributor:
         logger.info(
             f"Prior temperature: {self.prior_temperature:.2f} ({'targeted' if self.targeted_temperature else 'global'})")
 
+    # -------------------------------------------------------------------------
+    # PRIOR TEMPERATURE SCALING
+    # -------------------------------------------------------------------------
     def apply_temperature_to_priors(self, priors):
         """Apply targeted or global temperature scaling to priors for enhanced discrimination.
 
@@ -216,23 +215,23 @@ class BayesianAttributor:
 
         return temperature_priors
 
+    # -------------------------------------------------------------------------
+    # LOAD CLASSIFIERS
+    # -------------------------------------------------------------------------
     def load_binary_classifiers(self):
-        """Load OvR binary classifiers trained with a single-logit BCE head.
+        """Load binary classifiers for each generator.
 
-        Expected filenames in models_dir:
-          resnet50_dalle2_vs_nondalle2.pth
-          resnet50_dalle3_vs_nondalle3.pth
-          resnet50_firefly_vs_nonfirefly.pth
-          resnet50_midjourneyv5_vs_nonmidjourneyv5.pth
-          resnet50_midjourneyv6_vs_nonmidjourneyv6.pth
-          resnet50_sdxl_vs_nonsdxl.pth
-          resnet50_stablediffusion15_vs_nonstablediffusion15.pth
+        Supports both naming schemes:
+          - OvR style:   resnet50_<base>_vs_non<base>.pth
+          - real-vs-gen: resnet50_<base>_vs_coco.pth
+
+        where <base> is a sanitized version of the generator name.
         """
         from pathlib import Path
 
         classifiers = {}
 
-        # Map your logical generator names to the sanitized bases used in training
+        # Map logical generator names to the sanitized bases used in filenames
         name_to_base = {
             'dall-e2': 'dalle2',
             'dall-e3': 'dalle3',
@@ -245,10 +244,24 @@ class BayesianAttributor:
 
         for generator in available_generators:
             base = name_to_base[generator]
-            model_path = Path(models_dir) / f"resnet50_{base}_vs_non{base}.pth"
 
-            if not model_path.exists():
-                logger.warning(f"Model not found for {generator}: {model_path}")
+            # Try both possible filename patterns
+            candidates = [
+                Path(models_dir) / f"resnet50_{base}_vs_non{base}.pth",
+                Path(models_dir) / f"resnet50_{base}_vs_coco.pth",
+            ]
+
+            model_path = None
+            for cand in candidates:
+                if cand.exists():
+                    model_path = cand
+                    break
+
+            if model_path is None:
+                logger.warning(
+                    f"No model file found for {generator} "
+                    f"(tried: {', '.join(str(c) for c in candidates)})"
+                )
                 continue
 
             # Same architecture as in training: ResNet50 + Linear(1) head
@@ -260,7 +273,6 @@ class BayesianAttributor:
             in_features = model.fc.in_features
             model.fc = nn.Linear(in_features, 1)
 
-            # You saved a plain state_dict (not a checkpoint dict)
             state_dict = torch.load(model_path, map_location=device)
             model.load_state_dict(state_dict)
 
@@ -268,10 +280,19 @@ class BayesianAttributor:
             model.eval()
 
             classifiers[generator] = model
-            logger.info(f"Loaded OvR ResNet50 classifier for {generator} from {model_path}")
+            logger.info(f"Loaded binary ResNet50 classifier for {generator} from {model_path}")
+
+        if not classifiers:
+            logger.error(
+                "No binary classifiers were loaded! "
+                "Check `models_dir` and the expected filename patterns."
+            )
 
         return classifiers
 
+    # -------------------------------------------------------------------------
+    # LOAD PRIORS
+    # -------------------------------------------------------------------------
     def load_priors(self):
         """Load or create priors P(Generator)."""
         if self.use_priors:
@@ -398,8 +419,8 @@ class BayesianAttributor:
             'dall-e2_rigid_results.json': 'dall-e2',
             'dall-e3_rigid_results.json': 'dall-e3',
             'firefly_rigid_results.json': 'firefly',
-            'midjourneyV5_rigid_results.json': 'midjourneyV5',  # <- capital V
-            'midjourneyV6_rigid_results.json': 'midjourneyV6',  # <- capital V
+            'midjourneyV5_rigid_results.json': 'midjourneyV5',
+            'midjourneyV6_rigid_results.json': 'midjourneyV6',
             'sdxl_rigid_results.json': 'sdxl',
             'stable_diffusion_1-5_rigid_results.json': 'stable_diffusion_1-5'
         }
@@ -452,9 +473,6 @@ class BayesianAttributor:
         logger.info(f"  Real (COCO):     {coco_score:7.4f}")
         logger.info(f"  AI generators:   {np.mean(ai_scores):7.4f} ± {np.std(ai_scores):6.4f}")
 
-        # Convert RIGID scores to priors using a simpler approach
-        # Since all scores are very high (>0.95) and similar, use differences for discrimination
-
         # Calculate relative scores (difference from minimum)
         all_scores = [coco_score] + ai_scores
         min_score = min(all_scores)
@@ -463,29 +481,21 @@ class BayesianAttributor:
 
         # Normalize scores to [0, 1] range based on relative differences
         if score_range > 0:
-            # Use differences from minimum to create discrimination
             coco_norm = (coco_score - min_score) / score_range
             ai_norm = [(score - min_score) / score_range for score in ai_scores]
         else:
-            # All scores are identical - cannot form informative priors
             raise ValueError("Degenerate RIGID scores: all scores identical; cannot derive priors")
 
-        # Use gentler temperature for normalized scores
         temperature = 0.5
-
-        # Compute priors with minimum threshold to prevent zero priors
         min_prior = 0.01  # Minimum 1% prior for any generator
 
-        # For AI generators: use normalized scores directly
         ai_norm = np.array(ai_norm)
         ai_norm_centered = ai_norm - np.mean(ai_norm)
-        # clip to a small range so no one gets a crazy advantage
         ai_norm_centered = np.clip(ai_norm_centered, -0.1, 0.1)
         ai_exp_vals = np.exp(ai_norm_centered * temperature)
         ai_sum = np.sum(ai_exp_vals)
 
         # For COCO: invert the normalized score (lower RIGID = more likely real)
-        # But since COCO has high RIGID score (wrongly classified as AI), give it a baseline prior
         real_exp = np.exp((1.0 - coco_norm) * temperature)
 
         # Balance between real and AI priors
@@ -493,7 +503,6 @@ class BayesianAttributor:
         raw_real_prior = real_exp / total_strength
         raw_ai_priors = ai_exp_vals / ai_sum * (1.0 - raw_real_prior)
 
-        # Apply minimum prior threshold
         priors = {}
         priors['coco'] = max(raw_real_prior, min_prior)
 
@@ -515,15 +524,6 @@ class BayesianAttributor:
         """Load Aeroblade LPIPS distances and convert to priors using the
         same high-level conversion logic as `load_srec_priors` and
         `load_rigid_priors`.
-
-        Steps:
-        - Read per-repo JSON files under `self.prior_results_dir` containing
-          mappings image_path -> LPIPS distance.
-        - Compute mean LPIPS distance per repo (generator).
-        - Convert mean distances to priors: for AI generators we use
-          ai_exp_vals = exp(-alpha * mean_distance) (smaller distance => larger)
-          and for COCO (real) we compute real_strength = exp(-alpha * coco_mean).
-        - Balance real vs AI priors and renormalize so priors sum to 1.
         """
         json_dir = Path(self.prior_results_dir)
         gens_all = available_generators + ['coco']
@@ -545,7 +545,6 @@ class BayesianAttributor:
                     matched = g
                     break
             if matched is None:
-                # try simple prefix match
                 parts = name.split('_')
                 if parts and parts[0] in [g.lower() for g in gens_all]:
                     matched = parts[0]
@@ -615,6 +614,9 @@ class BayesianAttributor:
 
         return priors
 
+    # -------------------------------------------------------------------------
+    # PER-IMAGE PRIORS (Aeroblade)
+    # -------------------------------------------------------------------------
     def load_aeroblade_per_image(self):
         """Load per-image Aeroblade distances from priors/AEROBLADE/*.json.
         Builds a mapping: self.aeroblade_by_image[image_path] = {generator: distance}
@@ -628,7 +630,6 @@ class BayesianAttributor:
             logger.info(f"Aeroblade folder not found: {folder}")
             return
 
-        # Iterate JSON files and infer generator name from filename
         for jf in folder.glob('*.json'):
             try:
                 data = json.load(open(jf))
@@ -636,7 +637,6 @@ class BayesianAttributor:
                 logger.warning(f"Failed to load Aeroblade JSON {jf}: {e}")
                 continue
 
-            # infer generator key from filename by matching known generators
             fname = jf.name.lower()
             gen_key = None
             for g in available_generators + ['coco']:
@@ -644,18 +644,12 @@ class BayesianAttributor:
                     gen_key = g
                     break
             if gen_key is None:
-                # fallback: strip extensions
                 gen_key = jf.stem
 
-            # data expected to be mapping image_filename -> distance
             for img_name, dist in data.items():
-                # construct full path as stored in results (dataset_512/...)
-                # if img_name already contains path, use it as-is
                 if img_name.startswith('/'):
                     img_path = img_name
                 else:
-                    # try to find which dataset folder it belongs to by scanning
-                    # common prefix used in results: /mnt/hdd-data/vaidya/dataset_512
                     img_path = str(Path('/mnt/hdd-data/vaidya/dataset_512') / img_name)
 
                 rec = self.aeroblade_by_image.get(img_path, {})
@@ -668,7 +662,6 @@ class BayesianAttributor:
         """Return a prior dict for this image. If per-image Aeroblade data exists, use it.
         Otherwise fallback to dataset-level priors stored in self.priors.
         """
-        # Try per-image Aeroblade priors first
         try:
             self.load_aeroblade_per_image()
         except Exception:
@@ -678,33 +671,29 @@ class BayesianAttributor:
             img_key = str(image_path)
             if img_key in self.aeroblade_by_image:
                 distances = self.aeroblade_by_image[img_key]
-                # ensure all generators present
                 gens = available_generators.copy()
-                # build vector of distances; missing => large value
                 dlist = [distances.get(g, 10.0) for g in gens]
-                # convert to scores: smaller distance -> larger score
                 alpha = 10.0
                 scores = np.exp(-alpha * np.array(dlist))
-                # include coco as small baseline unless present
                 coco_score = distances.get('coco', 1e-6)
-                # Normalize across AI generators and add coco minimal score
                 total = scores.sum() + coco_score
                 priors = {g: float(scores[i] / total) for i, g in enumerate(gens)}
                 priors['coco'] = float(coco_score / total)
                 return priors
 
-        # Fallback: return dataset-level priors
         return self.priors
 
+    # -------------------------------------------------------------------------
+    # LIKELIHOODS
+    # -------------------------------------------------------------------------
     def get_likelihoods(self, image_path):
-        """Get P(Image|Generator) from OvR binary classifiers.
+        """Get P(Image|Generator) from binary classifiers.
 
         For each generator g:
           model_g outputs a single logit -> sigmoid = P(class = g).
         For real (coco):
           P(Image|Real) is the geometric mean of P(non-g) = 1 - P(g) over all generators.
         """
-        # Load and transform image
         image = Image.open(image_path).convert('RGB')
         image_tensor = transform(image).unsqueeze(0).to(device)
 
@@ -717,8 +706,6 @@ class BayesianAttributor:
                     logit = model(image_tensor).squeeze(1)  # shape (1,)
                     p_gen = torch.sigmoid(logit).item()     # P(class = generator)
                     likelihoods[generator] = p_gen
-
-                    # contribution to "real" likelihood: P(non-generator) = 1 - p_gen
                     real_components.append(max(1.0 - p_gen, 1e-6))
 
                     logger.debug(f"{generator}: P(generator) = {p_gen:.4f}")
@@ -728,10 +715,10 @@ class BayesianAttributor:
                     likelihoods[generator] = 0.5
                     real_components.append(0.5)
 
-        # Geometric mean for P(Image|Real = coco)
         if real_components:
             real_likelihood = float(np.prod(real_components) ** (1.0 / len(real_components)))
         else:
+            # Fallback if no classifiers were loaded
             real_likelihood = 0.5
 
         likelihoods['coco'] = real_likelihood
@@ -739,26 +726,23 @@ class BayesianAttributor:
 
         return likelihoods
 
+    # -------------------------------------------------------------------------
+    # POSTERIORS
+    # -------------------------------------------------------------------------
     def compute_posteriors(self, image_path):
         """Compute Bayesian posteriors P(Generator|Image)."""
-        # Get likelihoods P(Image|Generator)
         likelihoods = self.get_likelihoods(image_path)
-        # Get per-image priors if available (falls back to dataset priors)
         priors = self.get_image_priors(image_path)
 
-        # Compute unnormalized posteriors: P(Generator|Image) ∝ P(Image|Generator) × P(Generator)
         log_posteriors = {}
-        eps = 1e-12  # Numerical stability
+        eps = 1e-12
 
         for generator in available_generators + ['coco']:
             likelihood = likelihoods.get(generator, eps)
             prior = priors.get(generator, eps)
-
-            # Compute in log space for numerical stability
             log_posterior = np.log(likelihood + eps) + np.log(prior + eps)
             log_posteriors[generator] = log_posterior
 
-        # Convert back to probabilities and normalize
         max_log = max(log_posteriors.values())
         exp_posteriors = {k: np.exp(v - max_log) for k, v in log_posteriors.items()}
 
@@ -774,6 +758,9 @@ class BayesianAttributor:
             'confidence': max(posteriors.values())
         }
 
+    # -------------------------------------------------------------------------
+    # PUBLIC API
+    # -------------------------------------------------------------------------
     def attribute_single_image(self, image_path):
         """Attribution for a single image."""
         logger.info(f"Attributing: {image_path}")
@@ -782,8 +769,6 @@ class BayesianAttributor:
     def attribute_batch(self, input_dir, output_file=None, max_images=None):
         """Attribution for all images in a directory."""
         input_path = Path(input_dir)
-        # Search recursively for common image extensions so users can pass a
-        # dataset root containing per-generator subfolders (e.g. dataset_512/)
         exts = {'.png', '.jpg', '.jpeg'}
         image_files = [p for p in input_path.rglob('*') if p.suffix.lower() in exts]
         if max_images is not None:
@@ -812,11 +797,10 @@ class BayesianAttributor:
 
         # Save results
         if output_file is None:
-            output_file = Path(results_dir) / "bayesian_attribution_results.json"
-        output_path = Path(output_file) if output_file is not None else Path(output_file)
-        # ensure parent dir exists
-        output_path = Path(output_file) if output_file is not None else Path(
-            results_dir) / "bayesian_attribution_results.json"
+            output_path = Path(results_dir) / "bayesian_attribution_results.json"
+        else:
+            output_path = Path(output_file)
+
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(output_path, 'w') as f:
@@ -825,13 +809,13 @@ class BayesianAttributor:
         logger.info(f"Saved {len(results)} attribution results to {output_path}")
 
         # Generate summary statistics
-        self.generate_summary(results, Path(output_file).parent / "attribution_summary.json")
+        summary_path = output_path.parent / "attribution_summary.json"
+        self.generate_summary(results, summary_path)
 
         return results
 
     def generate_summary(self, results, summary_file):
         """Generate summary statistics from attribution results."""
-        # Count predictions per generator
         predictions = {}
         confidences = {}
 
@@ -846,13 +830,12 @@ class BayesianAttributor:
             predictions[pred] += 1
             confidences[pred].append(conf)
 
-        # Calculate summary stats
         summary = {
             'total_images': len(results),
             'predictions_count': predictions,
             'predictions_percentage': {k: v / len(results) * 100 for k, v in predictions.items()},
-            'average_confidence': {k: np.mean(v) for k, v in confidences.items()},
-            'confidence_std': {k: np.std(v) for k, v in confidences.items()}
+            'average_confidence': {k: float(np.mean(v)) for k, v in confidences.items()},
+            'confidence_std': {k: float(np.std(v)) for k, v in confidences.items()}
         }
 
         with open(summary_file, 'w') as f:
@@ -860,7 +843,6 @@ class BayesianAttributor:
 
         logger.info(f"Summary statistics saved to {summary_file}")
 
-        # Print summary
         print(f"\n{'=' * 50}")
         print("BAYESIAN ATTRIBUTION SUMMARY")
         print(f"{'=' * 50}")
@@ -868,7 +850,7 @@ class BayesianAttributor:
         print("\nPredictions:")
         for gen, count in predictions.items():
             pct = count / len(results) * 100
-            avg_conf = np.mean(confidences[gen])
+            avg_conf = float(np.mean(confidences[gen]))
             print(f"  {gen:20s}: {count:3d} ({pct:5.1f}%) - Avg confidence: {avg_conf:.3f}")
 
 
@@ -894,7 +876,6 @@ def main():
 
     args = parser.parse_args()
 
-    # Create attributor
     attributor = BayesianAttributor(
         method=args.method,
         model=args.model,
@@ -904,7 +885,6 @@ def main():
     )
 
     if args.image:
-        # Single image attribution
         result = attributor.attribute_single_image(args.image)
 
         print(f"\n{'=' * 50}")
@@ -917,11 +897,9 @@ def main():
             print(f"  {gen:20s}: {prob:.3f}")
 
     elif args.batch and args.input_dir:
-        # Batch processing
         output_file = args.output if args.output else None
         max_images = args.max_images if hasattr(args, 'max_images') else None
-        results = attributor.attribute_batch(args.input_dir, output_file, max_images=max_images)
-
+        attributor.attribute_batch(args.input_dir, output_file, max_images=max_images)
     else:
         print("Please specify either --image or --batch with --input-dir")
         parser.print_help()
