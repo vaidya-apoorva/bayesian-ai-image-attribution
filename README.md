@@ -88,11 +88,6 @@ gi_conference_code/
 │       ├── RIGID/               # RIGID outputs per dataset
 │       └── BAYESIAN_RESULTS/    # Final Bayesian attribution results
 │
-├── gi_conference_results/        # Published results and analysis
-│   ├── attribution_summary.json  # Overall attribution summary
-│   ├── bayesian_results/        # Bayesian analysis outputs
-│   ├── bayesian_results_with_new_model/  # Updated model results
-│   └── detectors_only_likelihoods_analysis/  # Detector-only analysis
 │
 └── README.md                      # This file
 ```
