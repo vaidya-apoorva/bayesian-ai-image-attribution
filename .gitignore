@@ -15,6 +15,7 @@ openimage_results/
 combined_pipeline/cache/
 baseline_classifier/runs/
 gi_conference_results/baseline_results/
+gi_conference/gi_conference_results
 
 # File types
 *.png
