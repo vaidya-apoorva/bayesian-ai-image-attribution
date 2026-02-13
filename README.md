@@ -299,20 +299,6 @@ python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
 - Predicted generator labels
 - Confidence scores
 
-
-### Architecture Notes
-
-**SReC Integration**: 
-- `combined_pipeline/scripts/srec_runner.py` is the entry point
-- It internally calls `SReC/srec_detector.py` as a subprocess
-- **`SReC/scripts/` is NOT directly used by combined_pipeline** (it contains legacy utilities)
-- Results are saved to `combined_pipeline/results/SREC/`
-
-**Bayesian Attribution**:
-- Located in: `combined_pipeline/scripts/BAYESIAN_SCRIPTS/`
-- Main script: `bayesian_attribution.py`
-- Loads detector outputs from: AEROBLADE, SReC, and RIGID result directories
-
 ## Output Format
 
 ### SReC Outputs
