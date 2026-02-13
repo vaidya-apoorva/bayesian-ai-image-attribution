@@ -21,76 +21,6 @@ The pipeline integrates four complementary detection methods:
 - **Comprehensive evaluation**: Includes ROC analysis, confusion matrices, accuracy metrics, and visualization tools
 - **Unified pipeline runners**: Scripts for easy execution across all datasets and methods
 
-## Repository Structure
-
-```
-gi_conference_code/
-├── aeroblade/                      # AEROBLADE implementation
-│   ├── scripts/                    # Detection and analysis scripts
-│   │   ├── run_aeroblade.py       # Primary detection script
-│   │   ├── bayesian_posterior_inference.py  # Bayesian analysis
-│   │   ├── calculate_prior.py     # Prior probability computation
-│   │   └── compute_aeroblade_distances_combined.py  # Batch distance computation
-│   ├── experiments/               # Experimental notebooks and analysis
-│   │   ├── 01_detect.ipynb       # Detection performance analysis
-│   │   ├── 02_analyze_patches.ipynb  # Patch-based analysis
-│   │   └── 03_deeper_reconstructions.ipynb  # Reconstruction quality
-│   ├── models/                    # Pre-trained KDE models
-│   │   └── generator_kdes/       # Generator-specific KDE models
-│   ├── results/                   # Analysis results and outputs
-│   ├── visualisation/            # Generated plots and visualizations
-│   └── src/aeroblade/           # Core AEROBLADE modules
-│
-├── SReC/                          # Super-Resolution Compression
-│   ├── srec_detector.py          # Main SReC detection script (called via srec_runner.py)
-│   ├── zero_shot_detector.py     # Legacy detection interface
-│   ├── src/                      # SReC core implementation
-│   ├── models/                   # Pre-trained compression models
-│   │   ├── openimages.pth       # Open Images model (2.70 bpsp)
-│   │   └── imagenet64.pth       # ImageNet64 model (4.29 bpsp)
-│   ├── scripts/                  # Utility scripts (not directly used by combined_pipeline)
-│   └── datasets/                 # Training and evaluation file lists
-│
-├── RIGID/                         # Training-free detection via noise robustness
-│   ├── rigid_detector.py         # Main RIGID detection script
-│   ├── rigid_cli.py             # Command-line interface
-│   ├── rigid_visualisation.py   # Visualization utilities
-│   ├── RIGID.ipynb              # Demonstration notebook
-│   ├── gen_images/              # Generated image test sets
-│   └── results/                 # Detection results and visualizations
-│
-├── baseline_classifier/          # Supervised ResNet-based classifier
-│   ├── two_level_diffusion_forensics.py  # Two-level training script
-│   ├── plot_confusion_matrix_level1.py   # Level-1 (Real vs AI) visualization
-│   ├── plot_confusion_matrix_level2.py   # Level-2 (Generator ID) visualization
-│   └── README.md                # Classifier-specific documentation
-│
-├── combined_pipeline/            # Unified pipeline integration
-│   ├── scripts/                  # Pipeline runners and integration scripts
-│   │   ├── srec_runner.py       # SReC pipeline runner
-│   │   ├── aeroblade_runner.py  # AEROBLADE pipeline runner
-│   │   ├── rigid_runner.py      # RIGID pipeline runner
-│   │   ├── generate_probability_matrix.py  # Classifier likelihood matrix
-│   │   ├── confusion_from_likelihoods.py   # Bayesian confusion matrices
-│   │   ├── learn_prior_weights.py          # Prior weight optimization
-│   │   ├── compare_priors.py    # Compare different prior methods
-│   │   └── BAYESIAN_SCRIPTS/    # Bayesian attribution scripts
-│   │       ├── bayesian_attribution.py          # Main attribution script
-│   │       ├── bayesian_attribution_srec_weights.py  # SReC-weighted version
-│   │       ├── generator_attribution.py         # Legacy attribution
-│   │       ├── analyze_bayesian_performance.py  # Performance analysis
-│   │       └── summarize_bayesian_results.py    # Results summarization
-│   ├── models/                   # Trained classifier models
-│   │   └── models_with_new_srec_weights/  # SReC-weighted models
-│   └── results/                  # Combined pipeline results
-│       ├── AEROBLADE/           # AEROBLADE outputs per dataset
-│       ├── SREC/                # SReC outputs per dataset
-│       ├── RIGID/               # RIGID outputs per dataset
-│       └── BAYESIAN_RESULTS/    # Final Bayesian attribution results
-│
-│
-└── README.md                      # This file
-```
 
 ## Installation
 
@@ -104,11 +34,15 @@ gi_conference_code/
 
 #### 1. Clone the repository
 ```bash
-git clone git@gitlab.cs.fau.de:op44ogoh/gi_conference_code.git
+git clone https://github.com/vaidya-apoorva/bayesian-ai-image-attribution.git
 cd gi_conference_code
 ```
 
+
 #### 2. Set up AEROBLADE environment
+Clone the official AEROBLADE implementation:
+https://github.com/jonasricker/aeroblade
+
 ```bash
 cd aeroblade
 python -m venv aeroblade_env
@@ -117,9 +51,16 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+
+
 #### 3. Set up SReC environment
+Clone the official SReC implementation:
+https://github.com/caoscott/SReC
+
 ```bash
 cd ../SReC
+# The following file is added on top for pipeline integration:
+#   SReC/srec_detector.py
 conda env create -f environment.yml
 conda activate SReC
 pip install -r requirements.txt
@@ -131,9 +72,15 @@ Required for actual compression/decompression:
 pip install torchac
 ```
 
+
 #### 5. Set up RIGID environment
+Clone the official RIGID implementation and add the pipeline-specific files:
 ```bash
-cd ../RIGID
+git clone https://github.com/IBM/RIGID.git RIGID
+# The following two files are added on top for pipeline integration:
+#   RIGID/rigid_detector.py
+#   RIGID/rigid_visualisation.py
+cd RIGID
 # RIGID uses standard PyTorch with DINOv2
 pip install torch torchvision
 pip install timm  # For vision transformers

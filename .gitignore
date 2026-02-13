@@ -14,13 +14,46 @@ tmp/
 openimage_results/
 combined_pipeline/cache/
 baseline_classifier/runs/
-gi_conference_results/baseline_results/
-gi_conference/gi_conference_results
 
-# File types
-*.png
-*.pth
+# Conference experimental results
+gi_conference_results/
+**/results/
+**/visualisation/
+**/reconstructions/
+
+# RIGID-specific ignores
+RIGID/results/
+RIGID/results/cifar10_stylegan2_sims/
+RIGID/gen_images/
+RIGID/RIGID.ipynb
+
+# SReC-specific ignores
+SReC/datasets/
+SReC/src/
+
+# Additional SReC ignores
+SReC/.gitignore
+SReC/INSTALL.md
+SReC/LICENSE
+SReC/README.md
+SReC/requirements.txt
+
+# File types to ignore
 *.srec
 *.egg-info/
 
-gi_conference_results/
+# macOS
+.DS_Store
+
+# aeroblade-specific ignores
+aeroblade/experiments/
+aeroblade/results/
+aeroblade/scripts/
+aeroblade/src/
+aeroblade/visualisation/
+aeroblade/.gitignore
+aeroblade/.pre-commit-config.yaml
+aeroblade/README.md
+aeroblade/requirements.txt
+aeroblade/ruff.toml
+aeroblade/setup.py
