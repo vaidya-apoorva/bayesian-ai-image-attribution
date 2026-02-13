@@ -1,9 +1,0 @@
-{
-  "val": 0.9934,
-  "imagenet256-adm": 0.9638,
-  "imagenet256-admg": 0.9726,
-  "imagenet256-biggan": 0.951,
-  "imagenet256-dit-xl-2": 0.9821,
-  "imagenet256-gigagan": 0.9628,
-  "imagenet256-ldm": 0.9717
-}

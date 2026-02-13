@@ -1,1 +1,0 @@
-{"ds": "Dataset ImageFolder\n    Number of datapoints: 100\n    Paths: [PosixPath('/mnt/hdd-data/vaidya/dataset_512/stable_diffusion_1_5')]\n    Transform: Compose(\n    ToTensor()\n)", "repo_id": "CompVis/stable-diffusion-v1-1", "output_root": "/mnt/ssd-data/vaidya/combined_pipeline/results/AEROBLADE/STABLE_DIFFUSION_1_5/reconstructions", "seed": "1"}
