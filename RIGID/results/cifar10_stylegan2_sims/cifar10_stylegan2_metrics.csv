@@ -1,8 +1,0 @@
-dataset,metric,value
-CIFAR10-StyleGAN2-ada,AUC,0.506121
-CIFAR10-StyleGAN2-ada,FPR95,0.971
-CIFAR10-StyleGAN2-ada,AP,0.5430543228577501
-CIFAR10,mean_similarity,0.872065544128418
-CIFAR10,num_images,1000.0
-CIFAR10-StyleGAN2-ada,mean_similarity,0.8766509294509888
-CIFAR10-StyleGAN2-ada,num_images,1000.0
