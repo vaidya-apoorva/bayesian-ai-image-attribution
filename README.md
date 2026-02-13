@@ -18,8 +18,6 @@ The pipeline integrates four complementary detection methods:
 - **Zero-shot detection**: Training-free methods require no retraining on specific datasets
 - **Multi-generator attribution**: Distinguishes between Real and 7 AI generators: DALL-E 2, DALL-E 3, Firefly, MidJourney V5, MidJourney V6, SDXL, and Stable Diffusion 1.5
 - **Probabilistic approach**: Bayesian framework provides confidence scores and posterior probabilities
-- **Comprehensive evaluation**: Includes ROC analysis, confusion matrices, accuracy metrics, and visualization tools
-- **Unified pipeline runners**: Scripts for easy execution across all datasets and methods
 
 
 ## Installation
@@ -35,7 +33,7 @@ The pipeline integrates four complementary detection methods:
 #### 1. Clone the repository
 ```bash
 git clone https://github.com/vaidya-apoorva/bayesian-ai-image-attribution.git
-cd gi_conference_code
+cd bayesian-ai-image-attribution
 ```
 
 
@@ -114,7 +112,6 @@ The pipeline expects datasets organized as follows:
 ```
 /path/to/dataset/
 ├── coco/                          # Real images from COCO
-├── imagenet/                      # Real images from ImageNet (optional)
 ├── dalle2/                        # DALL-E 2 generated images
 ├── dalle3/                        # DALL-E 3 generated images
 ├── firefly/                       # Adobe Firefly generated images
@@ -272,27 +269,22 @@ This script tests all trained ResNet classifiers on all datasets to generate P(G
 #### 5. Bayesian Attribution
 
 Combine all detector outputs to compute final Bayesian posteriors.
-**Note**: Uses Bayesian scripts from `combined_pipeline/scripts/BAYESIAN_SCRIPTS/`, not `SReC/scripts/`:
-
 ```bash
-# Using SReC priors
-python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_srec_weights.py \
-    --batch \
-    --input-dir /path/to/test/images \
-    --method srec \
-    --model openimages
+python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
+  --batch \
+  --input-dir /path/to/test/images \
+  --method srec \
+  --model openimages
 
-# Using RIGID priors
-python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_srec_weights.py \
-    --batch \
-    --input-dir /path/to/test/images \
-    --method rigid
+python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
+  --batch \
+  --input-dir /path/to/test/images \
+  --method rigid
 
-# Using AEROBLADE priors
-python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_srec_weights.py \
-    --batch \
-    --input-dir /path/to/test/images \
-    --method aeroblade
+python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
+  --batch \
+  --input-dir /path/to/test/images \
+  --method aeroblade
 ```
 
 **Key Parameters:**
@@ -307,15 +299,6 @@ python /path/to/combined_pipeline/scripts/BAYESIAN_SCRIPTS/bayesian_attribution_
 - Predicted generator labels
 - Confidence scores
 
-#### 6. Compare Prior Methods
-
-Run comprehensive comparison of all prior methods:
-
-```bash
-python /path/to/combined_pipeline/scripts/compare_priors.py
-```
-
-This script runs Bayesian attribution with SReC, RIGID, and AEROBLADE priors and generates comparative analysis.
 
 ### Architecture Notes
 
@@ -327,8 +310,7 @@ This script runs Bayesian attribution with SReC, RIGID, and AEROBLADE priors and
 
 **Bayesian Attribution**:
 - Located in: `combined_pipeline/scripts/BAYESIAN_SCRIPTS/`
-- Main script: `bayesian_attribution_srec_weights.py`
-- **NOT in `SReC/scripts/bayesian_generator_attribution.py`** (legacy reference - do not use)
+- Main script: `bayesian_attribution.py`
 - Loads detector outputs from: AEROBLADE, SReC, and RIGID result directories
 
 ## Output Format
@@ -368,9 +350,6 @@ This script runs Bayesian attribution with SReC, RIGID, and AEROBLADE priors and
 }
 ```
 
-**Reconstruction images:**
-- Location: `combined_pipeline/results/AEROBLADE/{DATASET}/reconstructions/`
-- Visual comparison of original and reconstructed images
 
 ### RIGID Outputs
 
@@ -407,43 +386,6 @@ This script runs Bayesian attribution with SReC, RIGID, and AEROBLADE priors and
 - Location: `combined_pipeline/models/`
 - Format: `resnet{18|50}_{generator}_vs_coco.pth`
 - Includes: model weights, training history, validation accuracy
-
-**Level-1 (Real vs AI) Results:**
-- Confusion matrices
-- Accuracy: ~92-95%
-
-**Level-2 (Generator ID) Results:**
-- Multi-class confusion matrices
-- Per-class accuracy
-- Overall accuracy: ~74-82%
-
-### Bayesian Integration Outputs
-
-**Attribution results:**
-- Location: `gi_conference_results/bayesian_results/bayesian_pipeline_results/{method}/`
-- Per-image posterior probabilities P(Generator|Image)
-- Predicted generator labels
-- Confidence scores
-
-**Format:**
-```json
-{
-  "image_001.png": {
-    "predicted_generator": "dalle2",
-    "confidence": 0.87,
-    "posteriors": {
-      "coco": 0.02,
-      "dalle2": 0.87,
-      "dalle3": 0.05,
-      "firefly": 0.01,
-      "midjourneyV5": 0.02,
-      "midjourneyV6": 0.01,
-      "sdxl": 0.01,
-      "stable_diffusion_1_5": 0.01
-    }
-  }
-}
-```
 
 **Summary files:**
 - Overall accuracy per method (SReC, RIGID, AEROBLADE priors)
