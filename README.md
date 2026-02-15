@@ -2,6 +2,49 @@
 
 This repository contains a comprehensive multi-method pipeline for detection and attribution of AI-generated images, combining four state-of-the-art approaches with Bayesian inference for robust probabilistic attribution. The pipeline was developed for the GI Conference research on zero-shot and training-free AI-generated image forensics.
 
+
+## Citations
+
+If you use this pipeline or its components, please cite the following papers:
+
+**AEROBLADE**
+```bibtex
+@InProceedings{Ricker_2024_CVPR,
+    author    = {Ricker, Jonas and Lukovnikov, Denis and Fischer, Asja},
+    title     = {AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {9130-9140}
+}
+```
+
+**RIGID**
+```bibtex
+@misc{he2024rigidtrainingfreemodelagnosticframework,
+  title={RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection}, 
+  author={Zhiyuan He and Pin-Yu Chen and Tsung-Yi Ho},
+  year={2024},
+  eprint={2405.20112},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2405.20112}, 
+}
+```
+
+**SReC**
+```bibtex
+@misc{cao2020losslessimagecompressionsuperresolution,
+  title={Lossless Image Compression through Super-Resolution}, 
+  author={Sheng Cao and Chao-Yuan Wu and Philipp Krähenbühl},
+  year={2020},
+  eprint={2004.02872},
+  archivePrefix={arXiv},
+  primaryClass={eess.IV},
+  url={https://arxiv.org/abs/2004.02872}, 
+}
+```
+
 ## Overview
 
 The pipeline integrates four complementary detection methods:
@@ -57,7 +100,7 @@ https://github.com/caoscott/SReC
 
 ```bash
 cd ../SReC
-# The following file is added on top for pipeline integration:
+# The following extra file has been added to the official SReC implementation to enable integration with the combined_pipeline:
 #   SReC/srec_detector.py
 conda env create -f environment.yml
 conda activate SReC
@@ -145,30 +188,6 @@ python /path/to/combined_pipeline/scripts/srec_runner.py \
     --resblocks 3
 ```
 
-**Example command (as used in GI Conference experiments):**
-```bash
-python /mnt/ssd-data/vaidya/combined_pipeline/scripts/srec_runner.py \
-    --images-list \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dalle2 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dalle3 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/firefly \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV6 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/sdxl \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/stable_diffusion_1-5 \
-    --model /mnt/ssd-data/vaidya/SReC/models/openimages.pth \
-    --resblocks 3
-```
-
-**Key Parameters:**
-- `--images-list`: Space-separated list of dataset directories to process
-- `--model`: Path to pre-trained SReC model (`openimages.pth` or `imagenet64.pth`)
-- `--resblocks`: Number of residual blocks (default: 5, use 3 for faster processing)
-- `--n-feats`: Number of features (default: 64)
-- `--scale`: Downsampling scale factor (default: 3)
-- `--K`: Clusters in logistic mixture model (default: 10)
-
 **Outputs:**
 - JSON files with D(l) scores for each image: `combined_pipeline/results/SREC/{DATASET}/JSON/{dataset}_d0.json`
 - SReC compressed files: `combined_pipeline/results/SREC/{DATASET}/SREC_IMAGES/`
@@ -192,27 +211,6 @@ python /path/to/combined_pipeline/scripts/aeroblade_runner.py \
     --repo-ids CompVis/stable-diffusion-v1-1
 ```
 
-**Example command (as used in GI Conference experiments):**
-```bash
-python /mnt/ssd-data/vaidya/combined_pipeline/scripts/aeroblade_runner.py \
-    --images-list \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/coco \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dalle2 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/dalle3 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/firefly \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV5 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/midjourneyV6 \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/sdxl \
-        /mnt/hdd-data/vaidya/gi_conference_dataset/bayesian_test_folder/stable_diffusion_1-5 \
-    --amount 100 \
-    --repo-ids CompVis/stable-diffusion-v1-1
-```
-
-**Key Parameters:**
-- `--images-list`: Space-separated list of dataset directories to process
-- `--amount`: Number of images to process per dataset (default: None = all images)
-- `--repo-ids`: Diffusion model autoencoders to use (default: SD1-1, SD2-base, Kandinsky-2-1)
-- `--output`: Base output directory (default: auto-organized in results/)
 
 **Outputs:**
 - Parquet files with distances: `combined_pipeline/results/AEROBLADE/{DATASET}/distances.parquet`
@@ -301,66 +299,6 @@ python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
 
 ## Output Format
 
-### SReC Outputs
-
-**Per-dataset JSON files:**
-- Location: `combined_pipeline/results/SREC/{DATASET}/JSON/{dataset}_d0.json`
-- Content: D(l) = NLL - Entropy scores for each image
-- Format:
-```json
-{
-  "image_001.png": -0.0245,
-  "image_002.png": -0.0312,
-  ...
-}
-```
-
-**SReC compressed files:**
-- Location: `combined_pipeline/results/SREC/{DATASET}/SREC_IMAGES/`
-- Format: `.srec` binary files
-
-
-### AEROBLADE Outputs
-
-**Distance files:**
-- Parquet: `combined_pipeline/results/AEROBLADE/{DATASET}/distances.parquet`
-- CSV: `combined_pipeline/results/AEROBLADE/{DATASET}/distances.csv`
-- JSON: `combined_pipeline/results/AEROBLADE/{DATASET}/{dataset}_aeroblade.json`
-
-**JSON format:**
-```json
-{
-  "image_001.png": 0.1234,
-  "image_002.png": 0.1567,
-  ...
-}
-```
-
-
-### RIGID Outputs
-
-**Results JSON:**
-- Location: `combined_pipeline/results/RIGID/rigid_results.json`
-- Per-image similarity scores
-- Dataset statistics and distributions
-- Real vs AI classification metrics
-
-**Format:**
-```json
-{
-  "coco": {
-    "scores": [0.985, 0.978, ...],
-    "mean": 0.981,
-    "std": 0.012
-  },
-  "dalle2": {
-    "scores": [0.823, 0.845, ...],
-    "mean": 0.834,
-    "std": 0.045
-  }
-}
-```
-
 ### Classifier Outputs
 
 **Probability Matrix:**
@@ -372,9 +310,3 @@ python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
 - Location: `combined_pipeline/models/`
 - Format: `resnet{18|50}_{generator}_vs_coco.pth`
 - Includes: model weights, training history, validation accuracy
-
-**Summary files:**
-- Overall accuracy per method (SReC, RIGID, AEROBLADE priors)
-- Per-generator accuracy
-- Confusion matrices
-- Comparison across prior methods
