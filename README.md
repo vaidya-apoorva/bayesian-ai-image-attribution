@@ -3,47 +3,6 @@
 This repository contains a comprehensive multi-method pipeline for detection and attribution of AI-generated images, combining four state-of-the-art approaches with Bayesian inference for robust probabilistic attribution. The pipeline was developed for the GI Conference research on zero-shot and training-free AI-generated image forensics.
 
 
-## Citations
-
-If you use this pipeline or its components, please cite the following papers:
-
-**AEROBLADE**
-```bibtex
-@InProceedings{Ricker_2024_CVPR,
-    author    = {Ricker, Jonas and Lukovnikov, Denis and Fischer, Asja},
-    title     = {AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error},
-    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
-    month     = {June},
-    year      = {2024},
-    pages     = {9130-9140}
-}
-```
-
-**RIGID**
-```bibtex
-@misc{he2024rigidtrainingfreemodelagnosticframework,
-  title={RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection}, 
-  author={Zhiyuan He and Pin-Yu Chen and Tsung-Yi Ho},
-  year={2024},
-  eprint={2405.20112},
-  archivePrefix={arXiv},
-  primaryClass={cs.CV},
-  url={https://arxiv.org/abs/2405.20112}, 
-}
-```
-
-**SReC**
-```bibtex
-@misc{cao2020losslessimagecompressionsuperresolution,
-  title={Lossless Image Compression through Super-Resolution}, 
-  author={Sheng Cao and Chao-Yuan Wu and Philipp Krähenbühl},
-  year={2020},
-  eprint={2004.02872},
-  archivePrefix={arXiv},
-  primaryClass={eess.IV},
-  url={https://arxiv.org/abs/2004.02872}, 
-}
-```
 
 ## Overview
 
@@ -237,14 +196,6 @@ python /path/to/combined_pipeline/scripts/rigid_runner.py \
     --ai-datasets dalle2 dalle3 firefly midjourneyV5 midjourneyV6 sdxl stable_diffusion_1-5
 ```
 
-**Key Parameters:**
-- `--images-list`: Space-separated list of dataset directories to process
-- `--real-datasets`: Names of real datasets (used for calibration)
-- `--ai-datasets`: Names of AI-generated datasets
-- `--noise-intensity`: Noise perturbation strength (default: 0.05)
-- `--batch-size`: Processing batch size (default: 256)
-- `--max-images`: Maximum images per dataset (default: 1000)
-
 **Outputs:**
 - JSON files with RIGID scores: `combined_pipeline/results/RIGID/rigid_results.json`
 - Per-dataset distributions and statistics
@@ -310,3 +261,45 @@ python combined_pipeline/scripts/bayesian_scripts/bayesian_attribution.py \
 - Location: `combined_pipeline/models/`
 - Format: `resnet{18|50}_{generator}_vs_coco.pth`
 - Includes: model weights, training history, validation accuracy
+
+## Citations
+
+If you use this repository in your research, please cite the following works:
+
+**AEROBLADE**
+```bibtex
+@InProceedings{Ricker_2024_CVPR,
+    author    = {Ricker, Jonas and Lukovnikov, Denis and Fischer, Asja},
+    title     = {AEROBLADE: Training-Free Detection of Latent Diffusion Images Using Autoencoder Reconstruction Error},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2024},
+    pages     = {9130-9140}
+}
+```
+
+**RIGID**
+```bibtex
+@misc{he2024rigidtrainingfreemodelagnosticframework,
+  title={RIGID: A Training-free and Model-Agnostic Framework for Robust AI-Generated Image Detection}, 
+  author={Zhiyuan He and Pin-Yu Chen and Tsung-Yi Ho},
+  year={2024},
+  eprint={2405.20112},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2405.20112}, 
+}
+```
+
+**SReC**
+```bibtex
+@misc{cao2020losslessimagecompressionsuperresolution,
+  title={Lossless Image Compression through Super-Resolution}, 
+  author={Sheng Cao and Chao-Yuan Wu and Philipp Krähenbühl},
+  year={2020},
+  eprint={2004.02872},
+  archivePrefix={arXiv},
+  primaryClass={eess.IV},
+  url={https://arxiv.org/abs/2004.02872}, 
+}
+```
