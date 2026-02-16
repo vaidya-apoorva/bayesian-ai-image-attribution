@@ -9,10 +9,10 @@ This repository contains a comprehensive multi-method pipeline for detection and
 The pipeline integrates four complementary detection methods:
 
 1. **AEROBLADE**: Training-free detection using autoencoder reconstruction error from latent diffusion models [[Ricker et al., CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Ricker_AEROBLADE_Training-Free_Detection_of_Latent_Diffusion_Images_Using_Autoencoder_Reconstruction_CVPR_2024_paper.html)]
-2. **SReC (Super-Resolution Compression)**: Lossless image compression through super-resolution for detecting compression artifacts [[Cao et al., arXiv 2020](https://arxiv.org/abs/2004.02872)]
+2. **SReC (Super-Resolution Compression)**: Lossless image compression through super-resolution for detecting compression artifacts [[Cao et al., arXiv 2020](https://arxiv.org/abs/2004.02872)] This follows the entropy-based detection principle introduced in Zero-Shot Detection of AI-Generated Images by [[Davide Cozzolino et al.,  arXiv 2024](https://arxiv.org/abs/2409.15875)] , where SReC is repurposed for zero-shot AI-image detection by measuring entropy deviations from real-image statistics (ZED framework).
 3. **RIGID**: Training-free, model-agnostic detection using robustness to noise perturbations in vision foundation model representations [[He et al., arXiv 2024](https://arxiv.org/abs/2405.20112)]
-4. **Baseline Classifier**: Two-level ResNet-based supervised classifier for Real vs AI detection and generator identification
-5. **Bayesian Attribution Framework**: Combines evidence from multiple detectors to compute posterior probabilities for generator attribution
+4. **Baseline Classifier**: A two-level supervised classifier based on the residual architecture, The first stage performs Real vs AI detection, while the second stage performs closed-set generator identification.
+5. **Bayesian Attribution Framework**: A probabilistic fusion stage that combines evidence from AEROBLADE (perceptual reconstruction error), SReC/ZED-style entropy signals (coding-cost gaps), RIGID robustness measures, and supervised classifier outputs to compute calibrated posterior probabilities for generator attribution.
 
 ### Key Features
 
@@ -43,34 +43,10 @@ cd bayesian-ai-image-attribution
 Clone the official AEROBLADE implementation:
 https://github.com/jonasricker/aeroblade
 
-```bash
-cd aeroblade
-python -m venv aeroblade_env
-source aeroblade_env/bin/activate  # On Windows: aeroblade_env\Scripts\activate
-pip install -r requirements.txt
-pip install -e .
-```
-
-
 
 #### 3. Set up SReC environment
 Clone the official SReC implementation:
 https://github.com/caoscott/SReC
-
-```bash
-cd ../SReC
-# The following extra file has been added to the official SReC implementation to enable integration with the combined_pipeline:
-#   SReC/srec_detector.py
-conda env create -f environment.yml
-conda activate SReC
-pip install -r requirements.txt
-```
-
-#### 4. Install torchac for SReC compression (optional)
-Required for actual compression/decompression:
-```bash
-pip install torchac
-```
 
 
 #### 5. Set up RIGID environment
@@ -80,10 +56,6 @@ git clone https://github.com/IBM/RIGID.git RIGID
 # The following two files are added on top for pipeline integration:
 #   RIGID/rigid_detector.py
 #   RIGID/rigid_visualisation.py
-cd RIGID
-# RIGID uses standard PyTorch with DINOv2
-pip install torch torchvision
-pip install timm  # For vision transformers
 ```
 
 #### 6. Set up Baseline Classifier environment
