@@ -91,7 +91,7 @@ The pipeline expects datasets organized as follows:
 └── stable_diffusion_1-5/         # Stable Diffusion 1.5 generated images
 ```
 
-### Pipeline Runners (Recommended Approach)
+### Pipeline Runners
 
 The combined pipeline provides unified runners for each detection method that handle multiple datasets automatically.
 
@@ -269,5 +269,18 @@ If you use this repository in your research, please cite the following works:
   archivePrefix={arXiv},
   primaryClass={eess.IV},
   url={https://arxiv.org/abs/2004.02872}, 
+}
+```
+
+**ZED**
+```bibtex
+@misc{cozzolino2024zeroshotdetectionaigeneratedimages,
+  title={Zero-Shot Detection of AI-Generated Images}, 
+  author={Davide Cozzolino and Giovanni Poggi and Matthias Nießner and Luisa Verdoliva},
+  year={2024},
+  eprint={2409.15875},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2409.15875}, 
 }
 ```
