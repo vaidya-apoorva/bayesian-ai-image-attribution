@@ -8,7 +8,7 @@ This repository contains a comprehensive multi-method pipeline for detection and
 
 The pipeline integrates four complementary detection methods:
 
-1. **AEROBLADE**: Training-free detection using autoencoder reconstruction error from latent diffusion models [[Ricker et al., CVPR 2024](https://arxiv.org/abs/2312.00736)]
+1. **AEROBLADE**: Training-free detection using autoencoder reconstruction error from latent diffusion models [[Ricker et al., CVPR 2024](https://openaccess.thecvf.com/content/CVPR2024/html/Ricker_AEROBLADE_Training-Free_Detection_of_Latent_Diffusion_Images_Using_Autoencoder_Reconstruction_CVPR_2024_paper.html)]
 2. **SReC (Super-Resolution Compression)**: Lossless image compression through super-resolution for detecting compression artifacts [[Cao et al., arXiv 2020](https://arxiv.org/abs/2004.02872)]
 3. **RIGID**: Training-free, model-agnostic detection using robustness to noise perturbations in vision foundation model representations [[He et al., arXiv 2024](https://arxiv.org/abs/2405.20112)]
 4. **Baseline Classifier**: Two-level ResNet-based supervised classifier for Real vs AI detection and generator identification
