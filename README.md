@@ -49,16 +49,12 @@ Clone the official SReC implementation:
 https://github.com/caoscott/SReC
 
 
-#### 5. Set up RIGID environment
-Clone the official RIGID implementation and add the pipeline-specific files:
-```bash
-git clone https://github.com/IBM/RIGID.git RIGID
-# The following two files are added on top for pipeline integration:
-#   RIGID/rigid_detector.py
-#   RIGID/rigid_visualisation.py
-```
+#### 4. Set up RIGID environment
+Clone the official RIGID implementation:
+https://github.com/IBM/RIGID
 
-#### 6. Set up Baseline Classifier environment
+
+#### 5. Set up Baseline Classifier environment
 ```bash
 cd ../baseline_classifier
 conda create -n baseline python=3.10 -y
@@ -68,7 +64,7 @@ pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 \
 pip install numpy==1.24.4 pillow==9.5.0 scikit-learn==1.2.2 tqdm pandas matplotlib
 ```
 
-#### 7. Set up Combined Pipeline environment
+#### 6. Set up Combined Pipeline environment
 The combined pipeline can use any of the above environments, or create a unified environment:
 ```bash
 cd ../combined_pipeline
